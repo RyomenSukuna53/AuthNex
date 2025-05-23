@@ -31,8 +31,8 @@ async def handle_register_step(_, message: Message):
         await message.reply("[ℍ𝗢𝕊𝗧] ==> 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝘆𝗼𝘂𝗿 𝗮𝗴𝗲 𝗻𝗼𝘄")
 
     elif state["step"] == "age":
-        if not text.isdigit() or not (8 <= int(text) <= 100):
-            return await message.reply("⚠️ Enter a valid age between 8 and 100.")
+        if not text.isdigit() or not (13 <= int(text) <= 100):
+            return await message.reply("⚠️ Enter a valid age between 13 and 100.")
         state["age"] = int(text)
         state["step"] = "mail"
         await message.reply("[ℍ𝗢𝕊𝗧] ==> 𝗡𝗼𝘄 𝗰𝗿𝗲𝗮𝘁𝗲 𝘆𝗼𝘂𝗿 𝗼𝘄𝗻 [𝔸𝗨𝗧𝗛ℕ𝗘𝗫] 𝗺𝗮𝗶𝗹.\n𝗜𝗡𝗦𝗨𝗥𝗘 𝗶𝘁 𝗲𝗻𝗱𝘀 𝘄𝗶𝘁𝗵 @AuthNex.Codes")
