@@ -1,7 +1,8 @@
 from pyrogram import Client 
 from config import *
 
-AuthNex = Client(api_id=API_ID, 
+AuthNex = Client("AuthNex",
+                 api_id=API_ID, 
                  api_hash=API_HASH, 
                  bot_token=BOT_TOKEN, 
                  plugins=dict(root="(AuthNex/Modules)") 
