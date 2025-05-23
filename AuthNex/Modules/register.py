@@ -5,6 +5,8 @@ from AuthNex import AuthNex
 from AuthNex.Database import user_col
 import random
 import re
+import asyncio 
+
 
 user_states = {}
 
@@ -17,6 +19,20 @@ async def create_account(_, message: Message):
 @AuthNex.on_message(filters.text & filters.private)
 async def handle_register_step(_, message: Message):
     user_id = message.from_user.id
+    bars = [
+    "▱▱▱▱▱▱▱▱▱▱  0%",
+    "▰▱▱▱▱▱▱▱▱▱ 10%",
+    "▰▰▱▱▱▱▱▱▱▱ 20%",
+    "▰▰▰▱▱▱▱▱▱▱ 30%",
+    "▰▰▰▰▱▱▱▱▱▱ 40%",
+    "▰▰▰▰▰▱▱▱▱▱ 50%",
+    "▰▰▰▰▰▰▱▱▱▱ 60%",
+    "▰▰▰▰▰▰▰▱▱▱ 70%",
+    "▰▰▰▰▰▰▰▰▱▱ 80%",
+    "▰▰▰▰▰▰▰▰▰▱ 90%",
+    "▰▰▰▰▰▰▰▰▰▰ 100%"
+    ]
+    
     if user_id not in user_states:
         return
 
@@ -74,6 +90,10 @@ async def handle_register_step(_, message: Message):
             "password": state["password"],
             "username": state["username"],
         }
+        for bar in bars:
+            await message.edit_text(f"```shell\n\nRegistering 【{_id}】 in System...\n{bar}\n```", parse_mode=ParseMode.MARKDOWN) 
+            await asyncio.sleep(1)
+        await message.reply(f"[{message.from_user.frst_name}](tg://user?id={_id} 𝗶𝘀 𝗿𝗲𝗴𝗶𝘀𝘁𝗲𝗿𝗲𝗱 𝗶𝗻 𝘀𝘆𝘀𝘁𝗲𝗺...", parse__mode=ParseMode.MARKDOWN) 
         user_col.insert_one(user_data)
 
         # Confirmation message
