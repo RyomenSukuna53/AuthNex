@@ -1,6 +1,6 @@
 python setup.py sdist bdist_wheel
 twine upload dist/*
-pip uninstall AuthNex.py -y
+pip uninstall AuthNex -y
 rm -rf build
 rm -rf dist
-rm -rf AuthNex.py.egg-info
+rm -rf AuthNex.egg-info
