@@ -1,23 +1,27 @@
 from setuptools import setup, find_packages
+import re
 
-setup(
-    name='AuthNex',
-    version='0.1',
-    author='Kuro-Raijin',
-    author_email='sufyan532011@gmail.com',
-    description='A login verification system for bots and games.',
-    long_description=open('README.md').read(),
-    long_description_content_type='IDK',
-    url='https://github.com/RyomenSukuna53/AuthNex',  # your repo
-    packages=find_packages(),
-    install_requires=[
-        'pyrogram',
-        'tgcrypto',
-        'tgcrypto',
-    ],
-    classifiers=[
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',
-    ],
-    python_requires='>=3.10',
+with open("requirements.txt", encoding="utf-8") as mano:
+  requires = [z.strip() for z in mano]
+    
+with open("Nexgram/__init__.py", encoding="utf-8") as fk:
+  version = re.findall(r"__version__ = \"(.+)\"", fk.read())[0]
+
+setup( 
+  name="AuthNex",
+  version=version,
+  packages=find_packages(),
+  install_requires=requires,
+  author="Otazuki",
+  author_email="sufyan532011@gmail.com",
+  description="just a try",
+  long_description=open("README.md").read(),
+  long_description_content_type="text/markdown",
+  url="https://github.com/RyomenSukuna53/AuthNex",
+  classifiers=[
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+  ],
+  python_requires='>=3.12',
 )
