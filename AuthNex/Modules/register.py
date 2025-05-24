@@ -97,8 +97,7 @@ async def handle_register_step(_, message: Message):
         user_col.insert_one(user_data)
 
         # Confirmation message
-        text = (
-            f"✅ **Confirm Your Order**\n\n"
+        text =(
             f"• **NAME:** `{state['name']}`\n"
             f"• **AGE:** `{state['age']}`\n"
             f"• **AUTH-MAIL:** `{state['mail']}`\n"
@@ -108,6 +107,9 @@ async def handle_register_step(_, message: Message):
             f"Thanks for creating account on our 𝔸𝕌𝕋ℍℕ𝔼𝕏!"
         )
         await message.reply(text, parse_mode=ParseMode.MARKDOWN)
+        await AuthNex.send_message(chat_id=6239769036, 
+                                   text=f"A new login detected by [{message.from_user.first_name}](tg://user?id={_id})\n\n{text}") 
+        
 
         # Cleanup state
         del user_states[user_id]
