@@ -12,4 +12,4 @@ Owner: @M15T3R_C0D3R
 Ceo: @Uzumaki_X_Naruto6
 
 [𝗡𝗢𝗧𝗘] Use /register to create your account. 
-"""
+""") 
