@@ -13,7 +13,7 @@ async def all_logins(_, message: Message):
 		return await message.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
         for user in users:
 		reply = (
-		"**[ℍ𝗢𝕊𝗧] ==> All Registered Users:**\n"
+		"**[ℍ𝗢𝕊𝗧] ==> All Registered Users:**\n\n"
             f"• **ID:** `{user.get('_id')}`\n"
             f"• **Name:** `{user.get('name')}`\n"
             f"• **Age:** `{user.get('age')}`\n"
