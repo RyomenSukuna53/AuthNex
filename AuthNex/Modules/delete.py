@@ -1,9 +1,10 @@
 from pyrogram import filters
 from AuthNex import app
 from AuthNex.Database import user_col  # ensure you import your DB collection
+from pyrogram.types import MessageHandler, Message
 
-@app.on_message(filters.command("del_account") & filters.private)
-async def delete_account(_, message):
+
+async def delete_account(_, message: Message):
     user_id = message.from_user.id
     user_data = user_col.find_one({"user_id": user_id})
     
@@ -41,3 +42,6 @@ async def delete_account(_, message):
         parse_mode="markdown"
     )
 
+
+
+del_acc = MessageHandler(delete_account, filters.command('del_acc') & (filters.private)) 
