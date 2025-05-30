@@ -9,11 +9,11 @@ SUDO_USERS = [6239769036]  # Replace with your Telegram user ID(s)
 
 async def all_logins(_, message: Message):
 	users = user_col.find()
-    if not await user_col.count_documents({}):
-        return await message.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
+	if not await user_col.count_documents({}):
+		return await message.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
 
-    reply = "**[ℍ𝗢𝕊𝗧] ==> All Registered Users:**\n\n"
-    for user in users:
+        reply = "**[ℍ𝗢𝕊𝗧] ==> All Registered Users:**\n\n"
+        for user in users:
         reply += (
             f"• **ID:** `{user.get('_id')}`\n"
             f"• **Name:** `{user.get('name')}`\n"
@@ -24,12 +24,12 @@ async def all_logins(_, message: Message):
             f"----------------------------\n\n"
         )
 
-    if len(reply) > 4096:
+        if len(reply) > 4096:
         # Break long text into chunks
-        for i in range(0, len(reply), 4096):
-			await message.reply_text(reply[i:i+4096], disable_web_page_preview=True)
-    else:
-        await message.reply_text(reply)
+            for i in range(0, len(reply), 4096):
+			    await message.reply_text(reply[i:i+4096], disable_web_page_preview=True)
+        else:
+            await message.reply_text(reply)
 
 
 all_logins = MessageHandler(all_logins, 
