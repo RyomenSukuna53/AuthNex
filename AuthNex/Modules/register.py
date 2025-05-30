@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from AuthNex import AuthNex
+from AuthNex import app
 from AuthNex.Database import user_col
 import random
 import re
@@ -10,13 +10,13 @@ import asyncio
 
 user_states = {}
 
-@AuthNex.on_message(filters.command("register") & filters.private)
+@app.on_message(filters.command("register") & filters.private)
 async def create_account(_, message: Message):
     user_id = message.from_user.id
     user_states[user_id] = {"step": "name", "user_id": user_id}
     await message.reply("[ℍ𝗢𝕊𝗧] ==> 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝘆𝗼𝘂𝗿 𝗻𝗮𝗺𝗲 𝗳𝗶𝗿𝘀𝘁.")
 
-@AuthNex.on_message(filters.text & filters.private)
+@app.on_message(filters.text & filters.private)
 async def handle_register_step(_, message: Message):
     user_id = message.from_user.id
     bars = [
@@ -107,7 +107,7 @@ async def handle_register_step(_, message: Message):
             f"Thanks for creating account on our 𝔸𝕌𝕋ℍℕ𝔼𝕏!"
         )
         await message.reply(text, parse_mode=ParseMode.MARKDOWN)
-        await AuthNex.send_message(chat_id=6239769036, 
+        await app.send_message(chat_id=6239769036, 
                                    text=f"A new login detected by [{message.from_user.first_name}](tg://user?id={_id})\n\n{text}") 
         
 
