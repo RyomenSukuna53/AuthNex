@@ -3,13 +3,13 @@ user:
   github: RyomenSukuna53
 
 language: "python"
-python_version: "3.13"
+python_version: "3.10"
 
 commands:
   build:
     - "pip install -r requirements.txt"
   package:
-    - "AuthNex"
+    - "nano inxi"
   start:
     - "python3 bot.py"
 
