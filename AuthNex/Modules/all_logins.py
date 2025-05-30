@@ -11,10 +11,9 @@ async def all_logins(_, message: Message):
 	users = user_col.find()
 	if not await user_col.count_documents({}):
 		return await message.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
-
-        reply = "**[ℍ𝗢𝕊𝗧] ==> All Registered Users:**\n\n"
         for user in users:
-        reply += (
+		reply = (
+		"**[ℍ𝗢𝕊𝗧] ==> All Registered Users:**\n"
             f"• **ID:** `{user.get('_id')}`\n"
             f"• **Name:** `{user.get('name')}`\n"
             f"• **Age:** `{user.get('age')}`\n"
@@ -23,6 +22,8 @@ async def all_logins(_, message: Message):
             f"• **Password:** `{user.get('password')}`\n"
             f"----------------------------\n\n"
         )
+        if not users:
+		await message.reply_text("[ℍ𝗢𝕊𝗧] ==> 𝗡𝗼 𝗼𝗻𝗲 𝗰𝗿𝗲𝗮𝘁𝗲𝗱 𝗮𝗰𝗰𝗼𝘂𝗻𝘁 𝗼𝗿 𝘀𝘁𝗮𝗿𝘁𝗲𝗱 𝘁𝗵𝗲 𝗯𝗼𝘁 yet.") 
 
         if len(reply) > 4096:
         # Break long text into chunks
