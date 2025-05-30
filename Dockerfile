@@ -13,3 +13,5 @@ RUN pip install -U -r requirements.txt
 
 # Run the application
 CMD ["python3", "-m", "AuthNex"]
+
+EXPOSE 8080
