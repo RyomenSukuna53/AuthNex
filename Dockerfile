@@ -12,6 +12,6 @@ RUN pip install --upgrade pip setuptools
 RUN pip install -U -r requirements.txt
 
 # Run the application
-CMD ["python3", "-m", "AuthNex"]
+CMD ["python3", "__main__.py"]
 
 EXPOSE 8080
