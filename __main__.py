@@ -18,3 +18,4 @@ AuthNex.add_handler(all_logins)
 
 if __name__=="__main__":
   AuthNex.run() 
+  print("𝔸𝗨𝗧𝗛ℕ𝗘𝕏 is now started ✅") 
