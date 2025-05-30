@@ -6,17 +6,18 @@ from AuthNex.Database import user_col
 import random
 import re
 import asyncio 
+from pyrogram.handlers import MessageHandler 
+from pyrogram.types impirt Message 
 
 
 user_states = {}
 
-@app.on_message(filters.command("register") & filters.private)
 async def create_account(_, message: Message):
     user_id = message.from_user.id
     user_states[user_id] = {"step": "name", "user_id": user_id}
     await message.reply("[ℍ𝗢𝕊𝗧] ==> 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝘆𝗼𝘂𝗿 𝗻𝗮𝗺𝗲 𝗳𝗶𝗿𝘀𝘁.")
 
-@app.on_message(filters.text & filters.private)
+
 async def handle_register_step(_, message: Message):
     user_id = message.from_user.id
     bars = [
@@ -115,3 +116,4 @@ async def handle_register_step(_, message: Message):
         del user_states[user_id]
 
 
+acc = MessageHandler(create_account, filters.command('Create_Acc') & (filters.private)) 
