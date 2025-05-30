@@ -6,7 +6,7 @@ SUDO_USERS = [6239769036]  # Replace with your Telegram user ID(s)
 
 @app.on_message(filters.command("all_logins") & filters.user(SUDO_USERS))
 async def all_logins(_, message):
-    users = user_col.find()
+	users = user_col.find()
     if not await user_col.count_documents({}):
         return await message.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
 
@@ -19,12 +19,12 @@ async def all_logins(_, message):
             f"• **Mail:** `{user.get('mail')}`\n"
             f"• **Username:** `{user.get('username')}`\n"
             f"• **Password:** `{user.get('password')}`\n"
-            f"----------------------------\n"
+            f"----------------------------\n\n"
         )
 
     if len(reply) > 4096:
         # Break long text into chunks
         for i in range(0, len(reply), 4096):
-            await message.reply_text(reply[i:i+4096], disable_web_page_preview=True)
+			await message.reply_text(reply[i:i+4096], disable_web_page_preview=True)
     else:
         await message.reply_text(reply)
