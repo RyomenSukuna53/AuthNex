@@ -4,7 +4,7 @@ import re
 with open("requirements.txt", encoding="utf-8") as mano:
   requires = [z.strip() for z in mano]
     
-with open("Nexgram/__init__.py", encoding="utf-8") as fk:
+with open("AuthNex/__init__.py", encoding="utf-8") as fk:
   version = re.findall(r"__version__ = \"(.+)\"", fk.read())[0]
 
 setup( 
@@ -12,7 +12,7 @@ setup(
   version=version,
   packages=find_packages(),
   install_requires=requires,
-  author="Otazuki",
+  author="Kuro__",
   author_email="sufyan532011@gmail.com",
   description="just a try",
   long_description=open("README.md").read(),
