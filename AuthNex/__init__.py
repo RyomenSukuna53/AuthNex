@@ -1,11 +1,11 @@
 from pyrogram import Client 
 from config import *
 
-AuthNex = Client("AuthNex",
+AuthNex = Client("AuthNexLogins",
                  api_id=API_ID, 
                  api_hash=API_HASH, 
                  bot_token=BOT_TOKEN, 
-                 plugins=dict(root="Modules") 
+                 plugins=dict(root="AuthNex/Modules") 
                 ) 
 
 import logging
