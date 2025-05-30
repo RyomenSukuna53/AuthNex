@@ -1,0 +1,17 @@
+user:
+  name: AuthNex
+  github: RyomenSukuna53
+
+language: "python"
+python_version: "3.13"
+
+commands:
+  build:
+    - "pip install -r requirements.txt"
+  package:
+    - "AuthNex"
+  start:
+    - "python3 bot.py"
+
+env:
+  - "ENVIRONMENT=production"
