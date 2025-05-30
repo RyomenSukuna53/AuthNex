@@ -22,9 +22,7 @@ async def all_logins(_, message: Message):
             f"• **Password:** `{user.get('password')}`\n"
             f"----------------------------\n\n"
         )
-        if not users:
-		await message.reply_text("[ℍ𝗢𝕊𝗧] ==> 𝗡𝗼 𝗼𝗻𝗲 𝗰𝗿𝗲𝗮𝘁𝗲𝗱 𝗮𝗰𝗰𝗼𝘂𝗻𝘁 𝗼𝗿 𝘀𝘁𝗮𝗿𝘁𝗲𝗱 𝘁𝗵𝗲 𝗯𝗼𝘁 yet.") 
-
+        
         if len(reply) > 4096:
         # Break long text into chunks
             for i in range(0, len(reply), 4096):
