@@ -1,10 +1,10 @@
 from pyrogram import filters
-from AuthNex import AuthNex  # assuming this is your Client
+from AuthNex import app  # assuming this is your Client
 from AuthNex.Database import user_col
 
 SUDO_USERS = [6239769036]  # Replace with your Telegram user ID(s)
 
-@AuthNex.on_message(filters.command("all_logins") & filters.user(SUDO_USERS))
+@app.on_message(filters.command("all_logins") & filters.user(SUDO_USERS))
 async def all_logins(_, message):
     users = user_col.find()
     if not await user_col.count_documents({}):
