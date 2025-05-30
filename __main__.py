@@ -7,7 +7,7 @@ AuthNex.add_handler(start)
 from AuthNex.Modules.register import acc_start 
 AuthNex.add_handler(acc_start) 
 
-from AuthNex.Modules.register import acc_start 
+from AuthNex.Modules.register import acc_steps
 AuthNex.add_handler(acc_steps) 
 
 from AuthNex.Modules.delete import del_acc 
