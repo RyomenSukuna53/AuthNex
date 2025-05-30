@@ -1,8 +1,8 @@
 from pyrogram import filters
-from AuthNex import AuthNex
+from AuthNex import app
 from AuthNex.Database import user_col  # ensure you import your DB collection
 
-@AuthNex.on_message(filters.command("del_account") & filters.private)
+@app.on_message(filters.command("del_account") & filters.private)
 async def delete_account(_, message):
     user_id = message.from_user.id
     user_data = user_col.find_one({"user_id": user_id})
@@ -28,7 +28,7 @@ async def delete_account(_, message):
     await message.reply_text("[ℍ𝗢𝕊𝗧] ==> ✅ 𝗬𝗼𝘂𝗿 𝗔𝗰𝗰𝗼𝘂𝗻𝘁 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 𝗱𝗲𝗹𝗲𝘁𝗲𝗱 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆.")
 
     # Logging to admin
-    await AuthNex.send_message(
+    await app.send_message(
         chat_id=6239769036,
         text=(
             f"[ℍ𝗢𝕊𝗧] ==> One account deleted by [{message.from_user.first_name}](tg://user?id={user_id})\n\n"
