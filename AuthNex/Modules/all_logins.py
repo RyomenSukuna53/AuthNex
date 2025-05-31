@@ -7,7 +7,7 @@ from pyrogram.handlers import MessageHandler
 SUDO_USERS = [6239769036]  # Replace with your Telegram user ID(s)
 
 async def all_logins(_, message: Message):
-    users = user_col.find()
+    users = await user_col.find()
     if not await user_col.count_documents({}):
         return await message.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
 
