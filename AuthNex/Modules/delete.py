@@ -45,4 +45,4 @@ async def delete_account(_, message: Message):
 
 
 
-del_acc = MessageHandler(delete_account, filters.command('del_acc') & (filters.private)) 
+del_acc = MessageHandler(delete_account, filters.command('delacc') & (filters.private)) 
