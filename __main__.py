@@ -1,4 +1,5 @@
 from AuthNex import app as AuthNex
+
 from pyrogram import Client 
 
 from AuthNex.Modules.start import start 
@@ -15,6 +16,9 @@ AuthNex.add_handler(del_acc)
 
 from AuthNex.Modules.all_logins import all_logins 
 AuthNex.add_handler(all_logins) 
+
+from AuthNex.Modules.logs import logs 
+AuthNex.add_handler(logs) 
 
 if __name__=="__main__":
   AuthNex.run() 
