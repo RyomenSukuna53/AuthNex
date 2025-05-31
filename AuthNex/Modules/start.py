@@ -11,7 +11,7 @@ We offers the best accounts to play game bots and use workers created by [𝔸�
 Enjoy reliable performance (⁠◍⁠•⁠ᴗ⁠•⁠◍⁠)
 
 Owner: @M15T3R_C0D3R
-Ceo: @Uzumaki_X_Naruto6
+Ceo: @Uzumaki_X_Naruto_6
 
 [𝗡𝗢𝗧𝗘] Use /register to create your account. 
 """) 
