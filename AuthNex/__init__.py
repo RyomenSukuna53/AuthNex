@@ -11,12 +11,9 @@ app = Client("AuthNexLogins",
 import logging
 
 logging.basicConfig(
-    level=logging.INFO,
-    format="[KURO-ZONE] %(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("bot.log"),
-        logging.StreamHandler()
-    ]
+  format="[KuroAI-Beta] %(name)s - %(levelname)s - %(message)s",
+  handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
+  level=logging.INFO,
 )
 
 logger = logging.getLogger(__name__)                            
