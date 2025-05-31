@@ -3,11 +3,11 @@ from AuthNex import app
 from AuthNex.Database import user_col  # ensure you import your DB collection
 from pyrogram.types import Message 
 from pyrogram.handlers import MessageHandler 
-
+from pyrogram.enums import ParseMode
 
 async def delete_account(_, message: Message):
     user_id = message.from_user.id
-    user_data = user_col.find_one({"user_id": user_id})
+    user_data = user_col.find_one({"_id": user_id})
     
     if not user_data:
         return await message.reply_text("[ℍ𝗢𝕊𝗧] ==> 𝗡𝗼 𝗮𝗰𝗰𝗼𝘂𝗻𝘁 𝗳𝗼𝘂𝗻𝗱 𝗳𝗼𝗿 𝗱𝗲𝗹𝗲𝘁𝗶𝗼𝗻.")
@@ -40,7 +40,7 @@ async def delete_account(_, message: Message):
             f"• Username: {user_data.get('username')}\n"
             f"• ID: {user_data.get('_id')}"
         ),
-        parse_mode="markdown"
+        parse_mode=ParseMode.MARKDOWN
     )
 
 
