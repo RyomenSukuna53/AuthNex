@@ -23,7 +23,7 @@ async def logs(_, message: Message):
     else: 
       return
 
-logs = MessageHandler(filters.command("logs") & (filters.private | filters.group)) 
+logs = MessageHandler(logs, filters.command("logs") & (filters.private | filters.group)) 
 
 
 
