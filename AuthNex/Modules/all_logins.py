@@ -24,13 +24,14 @@ async def all_logins(_, message: Message):
         )
 
     # Send in chunks if too long
-    if len(reply) > 4096:
-        for i in range(0, len(reply), 4096):
-            await message.reply_text(reply[i:i+4096], disable_web_page_preview=True)
-    else:
-        await message.reply_text(reply)
+    await message.reply_text(reply)
 
 # Register the handler
 all_logins = MessageHandler(all_logins, filters.command("all_acc") & (filters.private | filters.group) & filters.user(SUDO_USERS))
+
+
+
+
+
 
 
