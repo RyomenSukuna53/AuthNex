@@ -24,11 +24,11 @@ async def all_logins(_, message: Message):
             f"----------------------------\n\n"
         )
         
-        if len(reply) > 4096:
+    if len(reply) > 4096:
 		# Break long text into chunks
-                for i in range(0, len(reply), 4096):
+        for i in range(0, len(reply), 4096):
 			await message.reply_text(reply[i:i+4096], disable_web_page_preview=True)
-        else:
+    else:
 	    await message.reply_text(reply)
 
 
