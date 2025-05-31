@@ -79,15 +79,11 @@ async def handle_register_step(_, message: Message):
             return await message.reply("⚠️ Username already exists, try another.")
         state["username"] = text
 
-        # Generate unique ID
-        while True:
-            _id = random.randint(1000000000, 9999999999)
-            if not user_col.find_one({"_id": _id}):
-                break
+        # Generate unique ID 
 
         # Save to DB
-        user_data = {
-            "_id": _id,
+    user_data = {
+            "_id": message.from_user.id,
             "name": state["name"],
             "age": state["age"],
             "mail": state["mail"],
@@ -96,15 +92,13 @@ async def handle_register_step(_, message: Message):
         }
 
         # Show progress bar
-        for bar in bars:
-            try:
-                await message.reply(f"```shell\n\nRegistering 【{_id}】 in System...\n{bar}\n```", parse_mode=ParseMode.MARKDOWN)
-                await asyncio.sleep(0.5)
-            except:
-                pass
+    for bar in bars:
+        await message.reply(f"```shell\n\nRegistering 【{_id}】 in System...\n{bar}\n```", parse_mode=ParseMode.MARKDOWN)
+        await asyncio.sleep(0.5)
+        
 
         # Confirmation
-        confirm_text = (
+    confirm_text = (
             f"• **NAME:** `{state['name']}`\n"
             f"• **AGE:** `{state['age']}`\n"
             f"• **AUTH-MAIL:** `{state['mail']}`\n"
@@ -113,13 +107,13 @@ async def handle_register_step(_, message: Message):
             f"• **ID:** `{_id}`\n"
             f"Thanks for creating account on our 𝔸𝕌𝕋ℍℕ𝔼𝕏!"
         )
-        await message.reply(confirm_text, parse_mode=ParseMode.MARKDOWN)
+    await message.reply(confirm_text, parse_mode=ParseMode.MARKDOWN)
 
         # Save in DB
-        user_col.insert_one(user_data)
+    await user_col.insert_one(user_data)
 
         # Notify Owner
-        await app.send_message(
+    await app.send_message(
             chat_id=6239769036,  # Replace with your ID
             text=f"A new login detected by [{message.from_user.first_name}](tg://user?id={user_id})\n\n{confirm_text}",
             parse_mode=ParseMode.MARKDOWN
