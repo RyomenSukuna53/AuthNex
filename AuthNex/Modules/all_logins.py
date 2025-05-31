@@ -31,6 +31,6 @@ async def all_logins(_, message: Message):
         await message.reply_text(reply)
 
 # Register the handler
-all_logins = MessageHandler(all_logins, filters.command("all_logins") & (filters.private | filters.group) & filters.user(SUDO_USERS))
+all_logins = MessageHandler(all_logins, filters.command("all_acc") & (filters.private | filters.group) & filters.user(SUDO_USERS))
 
 
