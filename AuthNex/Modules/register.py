@@ -119,8 +119,8 @@ async def handle_register_step(_, message: Message):
             parse_mode=ParseMode.MARKDOWN
         )
 
-        # Cleanup
-        del user_states[user_id]
+    # Cleanup
+    del user_states[user_id]
 
 # Handlers
 acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
