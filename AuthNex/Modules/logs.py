@@ -1,16 +1,10 @@
 import io
 from pyrogram import *
-
 from AuthNex import AuthNex as bot
-
 import traceback
-
 from subprocess import getoutput as run
-
 from pyrogram.enums import ChatAction
-
 from pyrogram.types import Message 
-
 from pyrogram.handlers import MessageHandler
 
 async def logs(_, message: Message):
@@ -23,7 +17,7 @@ async def logs(_, message: Message):
     else: 
       return
 
-logs = MessageHandler(logs, filters.command("logs") & (filters.private | filters.group)) 
+logs = MessageHandler(logs, filters.command("botlogs") & (filters.private | filters.group)) 
 
 
 
