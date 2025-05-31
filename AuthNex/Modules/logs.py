@@ -1,6 +1,6 @@
 import io
 from pyrogram import *
-from AuthNex import AuthNex as bot
+from AuthNex import app as bot
 import traceback
 from subprocess import getoutput as run
 from pyrogram.enums import ChatAction
