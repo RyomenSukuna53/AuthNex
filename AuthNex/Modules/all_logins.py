@@ -6,7 +6,7 @@ from pyrogram.handlers import MessageHandler
 
 
 async def all_logins(_, m: Message):
-    users = await user_col.find("_id": None)
+    users = await user_col.find({"_id": None})
     if not await user_col.count_documents({}):
         return await m.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
 
