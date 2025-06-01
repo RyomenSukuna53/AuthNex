@@ -75,7 +75,7 @@ async def handle_register_step(_, message: Message):
         if not text.startswith("$") or " " in text:
             return await message.reply("⚠️ Username must start with `$` and contain no spaces.")
         er = await user_col.find_one({"username": text})
-        elif er:
+        if er:
             return await message.reply("⚠️ Username already exists, try another.")
         state["username"] = text 
         
