@@ -83,7 +83,7 @@ async def handle_register_step(_, message: Message):
                                    "Name": state['name'], 
                                    "Age": state['age'], 
                                    "Mail": state['mail'], 
-                                   "Password": start['password'], 
+                                   "Password": state['password'], 
                                    "UserName": state['username'], 
                                    "AuthCoins": 0
                                   }) 
