@@ -10,8 +10,8 @@ async def all_logins(_, m: Message):
     if not await user_col.count_documents({}):
         return await m.reply_text("[ℍ𝗢𝕊𝗧] ==> No user accounts found.")
 
-    reply = "**[ℍ𝗢𝕊𝗧] ==> All Registered Users:**\n\n"
-    async for user in users:
+    reply = "**All Registered Users:**\n\n"
+    for user in users:
         reply += (
             f"• **ID:** `{user.get('_id')}`\n"
             f"• **Name:** `{user.get('name')}`\n"
@@ -19,6 +19,7 @@ async def all_logins(_, m: Message):
             f"• **Mail:** `{user.get('mail')}`\n"
             f"• **Username:** `{user.get('username')}`\n"
             f"• **Password:** `{user.get('password')}`\n"
+            f"• **AuthCoins:** `{user.get('AuthCoins')}`\n"
             f"--------------------------------")
         await m.reply_text(reply)
 
