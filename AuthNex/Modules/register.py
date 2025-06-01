@@ -79,14 +79,7 @@ async def handle_register_step(_, message: Message):
             return await message.reply("⚠️ Username already exists, try another.")
         state["username"] = text 
         
-        await user_col.insert_one({"_id": message.from_user.id, 
-                                   "Name": state['name'], 
-                                   "Age": state['age'], 
-                                   "Mail": state['mail'], 
-                                   "Password": state['password'], 
-                                   "UserName": state['username'], 
-                                   "AuthCoins": 0
-                                  }) 
+         
         m = await message.reply_text(f"```bash\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bars[0]}", parse_mode=ParseMode.MARKDOWN) 
         for bar in bars:
             await m.edit_text(f"```bash\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bar}", parse_mode=ParseMode.MARKDOWN) 
@@ -97,7 +90,14 @@ async def handle_register_step(_, message: Message):
 ═║║║║║╬║║║╩║╚╗╔╣║║║║
 ═╚╝╚╩╩╩╩╩╩╩╝═╚╝╚═╩═╝
 ╯ """) 
-
+        await user_col.insert_one({"_id": message.from_user.id, 
+                                   "Name": state['name'], 
+                                   "Age": state['age'], 
+                                   "Mail": state['mail'], 
+                                   "Password": state['password'], 
+                                   "UserName": state['username'], 
+                                   "AuthCoins": 0
+                                  })
 
 # Handlers
 acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
