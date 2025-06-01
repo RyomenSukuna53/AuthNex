@@ -96,7 +96,9 @@ async def handle_register_step(_, message: Message):
                                    "Mail": state['mail'], 
                                    "Password": state['password'], 
                                    "UserName": state['username'], 
-                                   "AuthCoins": 0
+                                   "Owner": message.from_user.first_name, 
+                                   "AuthCoins": 0,
+                                   "Mails": 0
                                   })
 
 # Handlers
