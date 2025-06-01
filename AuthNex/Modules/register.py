@@ -99,7 +99,8 @@ async def handle_register_step(_, message: Message):
                                    "UserName": state['username'], 
                                    "Owner": message.from_user.first_name, 
                                    "AuthCoins": 0,
-                                   "Mails": 0
+                                   "Mails": 0,
+                                   "Login": True 
                                   })
 
         del user_state[user_id]
