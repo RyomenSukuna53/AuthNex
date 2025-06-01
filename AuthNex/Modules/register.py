@@ -80,7 +80,7 @@ async def handle_register_step(_, message: Message):
         state["username"] = text 
         
          
-        m = await message.reply_text(f"```bash\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bars[0]}", parse_mode=ParseMode.MARKDOWN) 
+        m = await message.reply_text(f"𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bars[10]}", parse_mode=ParseMode.MARKDOWN) 
         for bar in bars:
             await m.edit_text(f"𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bar}", parse_mode=ParseMode.MARKDOWN) 
             await asyncio.sleep(1) 
