@@ -80,12 +80,30 @@ async def handle_register_step(_, message: Message):
         state["username"] = text 
         
         await user_col.insert_one({"_id": message.from_user.id, 
-                                   "Name": 
+                                   "Name": state['name'], 
+                                   "Age": state['age'], 
+                                   "Mail": state['mail'], 
+                                   "Password": start['password'], 
+                                   "UserName": state['username'], 
+                                   "AuthCoins": 0
+                                  }) 
+        m = await message.reply_text(f"```bash\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bar[0]}", parse_mode=ParseMode.MARKDOWN) 
+        for bar in bars:
+            await m.edit_text(f"```bash\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bar}", parse_mode=ParseMode.MARKDOWN) 
+
+        await m.edit_text("""[ℍ𝗢𝕊𝗧] ==> ✨ 𝘾𝙧𝙚𝙖𝙩𝙚𝙙 𝘼𝙘𝙘𝙤𝙪𝙣𝙩 𝙤𝙛 𝔸𝗨𝗧𝗛ℕ𝗘𝕏 𝙛𝙤𝙧 {state['name']}\n𝘿𝙤 /profile 𝙩𝙤 𝙨𝙚𝙚 𝙮𝙤𝙪𝙧  𝔸𝗨𝗧𝗛ℕ𝗘𝕏 𝙋𝙧𝙤𝙛𝙞𝙡𝙚.💘\n\n
+╔══╦╗════╔╗═╔╗╔╗
+╚╗╔╣╚╦═╦═╣╚╗║╚╝╠═╦╦╗
+═║║║║║╬║║║╩║╚╗╔╣║║║║
+═╚╝╚╩╩╩╩╩╩╩╝═╚╝╚═╩═╝
+╯ """) 
 
 
-        
 # Handlers
 acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
 acc_steps = MessageHandler(handle_register_step, filters.private)
+
+
+
 
 
