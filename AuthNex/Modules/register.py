@@ -82,9 +82,10 @@ async def handle_register_step(_, message: Message):
          
         m = await message.reply_text(f"```bash\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bars[0]}", parse_mode=ParseMode.MARKDOWN) 
         for bar in bars:
-            await m.edit_text(f"```bash\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bar}", parse_mode=ParseMode.MARKDOWN) 
+            await m.edit_text(f"𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bar}", parse_mode=ParseMode.MARKDOWN) 
+            await asyncio.sleep(1) 
 
-        await m.edit_text("""[ℍ𝗢𝕊𝗧] ==> ✨ 𝘾𝙧𝙚𝙖𝙩𝙚𝙙 𝘼𝙘𝙘𝙤𝙪𝙣𝙩 𝙤𝙛 𝔸𝗨𝗧𝗛ℕ𝗘𝕏 𝙛𝙤𝙧 {state['name']}\n𝘿𝙤 /profile 𝙩𝙤 𝙨𝙚𝙚 𝙮𝙤𝙪𝙧  𝔸𝗨𝗧𝗛ℕ𝗘𝕏 𝙋𝙧𝙤𝙛𝙞𝙡𝙚.💘\n\n
+        await m.edit_text(f"""[ℍ𝗢𝕊𝗧] ==> ✨ 𝘾𝙧𝙚𝙖𝙩𝙚𝙙 𝘼𝙘𝙘𝙤𝙪𝙣𝙩 𝙤𝙛 𝔸𝗨𝗧𝗛ℕ𝗘𝕏 𝙛𝙤𝙧 {state['name']}\n{bar[10]}\n𝘿𝙤 /profile 𝙩𝙤 𝙨𝙚𝙚 𝙮𝙤𝙪𝙧  𝔸𝗨𝗧𝗛ℕ𝗘𝕏 𝙋𝙧𝙤𝙛𝙞𝙡𝙚.💘\n\n
 ╔══╦╗════╔╗═╔╗╔╗
 ╚╗╔╣╚╦═╦═╣╚╗║╚╝╠═╦╦╗
 ═║║║║║╬║║║╩║╚╗╔╣║║║║
