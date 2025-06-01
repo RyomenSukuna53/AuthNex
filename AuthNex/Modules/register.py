@@ -75,53 +75,15 @@ async def handle_register_step(_, message: Message):
         if not text.startswith("$") or " " in text:
             return await message.reply("⚠️ Username must start with `$` and contain no spaces.")
         er = await user_col.find_one({"username": text})
-        if er:
+        elif er:
             return await message.reply("⚠️ Username already exists, try another.")
-        state["username"] = text
-
-        # Generate unique ID 
-
-        # Save to DB
-    user_data = {
-            "_id": message.from_user.id,
-            "name": state["name"],
-            "age": state["age"],
-            "mail": state["mail"],
-            "password": state["password"],
-            "username": state["username"],
-        }
-
-        # Show progress bar
-    for bar in bars:
-        await message.reply(f"```shell\n\nRegistering 【{_id}】 in System...\n{bar}\n```", parse_mode=ParseMode.MARKDOWN)
-        await asyncio.sleep(0.5)
+        state["username"] = text 
         
+        await user_col.insert_one({"_id": message.from_user.id, 
+                                   "Name": 
 
-        # Confirmation
-    confirm_text = (
-            f"• **NAME:** `{state['name']}`\n"
-            f"• **AGE:** `{state['age']}`\n"
-            f"• **AUTH-MAIL:** `{state['mail']}`\n"
-            f"• **PASSWORD:** `{state['password']}`\n"
-            f"• **USERNAME:** `{state['username']}`\n"
-            f"• **ID:** `{_id}`\n"
-            f"Thanks for creating account on our 𝔸𝕌𝕋ℍℕ𝔼𝕏!"
-        )
-    await message.reply(confirm_text, parse_mode=ParseMode.MARKDOWN)
 
-        # Save in DB
-    await user_col.insert_one(user_data)
-
-        # Notify Owner
-    await app.send_message(
-            chat_id=6239769036,  # Replace with your ID
-            text=f"A new login detected by [{message.from_user.first_name}](tg://user?id={user_id})\n\n{confirm_text}",
-            parse_mode=ParseMode.MARKDOWN
-        )
-
-    # Cleanup
-    del user_states[user_id]
-
+        
 # Handlers
 acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
 acc_steps = MessageHandler(handle_register_step, filters.private)
