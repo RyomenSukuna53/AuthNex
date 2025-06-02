@@ -26,7 +26,8 @@ async def reset_handler(_, m: Message):
     sync = await m.reply("Deleting...") 
 
     for bar in Bars:
-        await sync.edit_text(f"```shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}```", parse_mode=ParseMode.MARKDOWN)
+        await sync.edit_text(f"
+shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}") 
         await AsyncIO.sleep(1)
 
     # Optionally delete the data
@@ -44,3 +45,4 @@ ResetHandlerObject = MessageHandler(
 
 # Add this to your main.py file:
 # app.add_handler(reset_handler_obj)
+
