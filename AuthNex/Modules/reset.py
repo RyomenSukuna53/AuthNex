@@ -7,11 +7,24 @@ import random
 import asyncio
 from pyrogram.handlers import MessageHandler
 from config import * 
-from AuthNex.Bars import Bars
 
 
 # Reset command function
 async def reset_handler(_, m: Message):
+    bars = [
+    "▱▱▱▱▱▱▱▱▱▱  0%",
+    "▰▱▱▱▱▱▱▱▱▱ 10%",
+    "▰▰▱▱▱▱▱▱▱▱ 20%",
+    "▰▰▰▱▱▱▱▱▱▱ 30%",
+    "▰▰▰▰▱▱▱▱▱▱ 40%",
+    "▰▰▰▰▰▱▱▱▱▱ 50%",
+    "▰▰▰▰▰▰▱▱▱▱ 60%",
+    "▰▰▰▰▰▰▰▱▱▱ 70%",
+    "▰▰▰▰▰▰▰▰▱▱ 80%",
+    "▰▰▰▰▰▰▰▰▰▱ 90%",
+    "▰▰▰▰▰▰▰▰▰▰ 100%"
+    ]
+    
     data = user_col.find({})
     if not data:
         await m.reply_text("🧐") 
@@ -25,7 +38,7 @@ async def reset_handler(_, m: Message):
     await m.delete() 
     sync = await m.reply("Deleting...") 
 
-    for bar in Bars:
+    for bar in bars:
         await sync.edit_text(f"```shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}```", parse_mode=ParseMode.MARKDOWN) 
         await asyncio.sleep(1)
 
@@ -33,7 +46,7 @@ async def reset_handler(_, m: Message):
     user_col.delete({})
 
     await sync.edit_text(
-        f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{Bars[-1]}"
+        f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{bars[-1]}"
     )
 
 # Proper handler (with correct filters)
