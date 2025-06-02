@@ -13,7 +13,7 @@ async def reset_handler(_, m: Message):
     user_id = m.from_user.id
 
     # Check if database has any data
-    data = User.find_one({"_id": user_id})
+    data = User.find({})
     if not data:
         await m.reply_text("🧐") 
         await AsyncIO.sleep(1) 
@@ -30,7 +30,7 @@ async def reset_handler(_, m: Message):
         await AsyncIO.sleep(1)
 
     # Optionally delete the data
-    User.delete_one({"_id": user_id})
+    User.delete({})
 
     await sync.edit_text(
         f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{Bars[-1]}"
