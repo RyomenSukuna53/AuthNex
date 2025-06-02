@@ -91,6 +91,7 @@ async def handle_register_step(_, message: Message):
             return await message.reply("⚠️ Username already exists, try another.")
         state["username"] = text 
         
+        
          
         m = await message.reply_text(f"𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bars[10]}", parse_mode=ParseMode.MARKDOWN) 
         for bar in bars:
@@ -114,8 +115,8 @@ async def handle_register_step(_, message: Message):
                                    "Mails": 0,
                                    "Login": True 
                                   })
-
-        del user_state[user_id]
+       del user_state[user_id]
+        
 # Handlers
 acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
 acc_steps = MessageHandler(handle_register_step, filters.private)
