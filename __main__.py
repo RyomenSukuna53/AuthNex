@@ -11,8 +11,8 @@ AuthNex.add_handler(acc_start)
 from AuthNex.Modules.register import acc_steps
 AuthNex.add_handler(acc_steps) 
 
-from AuthNex.Modules.reset import reset 
-AuthNex.add_handler(reset) 
+from AuthNex.Modules.reset import reset_handler 
+AuthNex.add_handler(reset_handler) 
 
 
 if __name__=="__main__":
