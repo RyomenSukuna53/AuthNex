@@ -16,13 +16,13 @@ async def reset(_, m: Message):
         await m.reply("😕 𝙽𝚘 𝚕𝚘𝚐𝚒𝚗𝚜 𝚏𝚘𝚞𝚗𝚍 𝚒𝚗 𝚏𝚒𝚕𝚎𝚜 📁") 
         return 
 
-   await m.reply("🧐") 
-   await AsyncIO.sleep(1) 
-   sync = await m.reply("Deleting...") 
-   for Bar in Bars:
-       await sync.edit_text(f"```shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}```") 
-       await AsyncIO.sleep(1) 
-   await sync.edit_text(f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{bar[10]}") 
+    await m.reply("🧐") 
+    await AsyncIO.sleep(1) 
+    sync = await m.reply("Deleting...") 
+    for Bar in Bars:
+        await sync.edit_text(f"```shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}```") 
+        await AsyncIO.sleep(1) 
+    await sync.edit_text(f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{bar[10]}") 
 
 reset = MessageHandler(reset, filters.command('reset') & (filters.group | filters.private) & filters.user(SUDO)) 
 
