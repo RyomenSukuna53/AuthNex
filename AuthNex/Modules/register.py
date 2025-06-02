@@ -115,7 +115,7 @@ async def handle_register_step(_, message: Message):
                                    "Mails": 0,
                                    "Login": True 
                                   })
-       del user_state[user_id]
+        del user_state[user_id]
         
 # Handlers
 acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
