@@ -30,7 +30,7 @@ async def reset_handler(_, m: Message):
         await asyncio.sleep(1)
 
     # Optionally delete the data
-    User.delete({})
+    user_col.delete({})
 
     await sync.edit_text(
         f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{Bars[-1]}"
