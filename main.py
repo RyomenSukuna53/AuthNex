@@ -4,11 +4,14 @@ from AuthNex.Modules.start import start
 from AuthNex.Modules.register import acc_start
 from AuthNex.Modules.reset import ResetHandlerObject 
 from AuthNex.Modules.register import acc_steps
+from AuthNex.Modules.accounts import accounts 
+
 
 AuthNex.add_handler(start) 
 AuthNex.add_handler(acc_start) 
 AuthNex.add_handler(acc_steps) 
 AuthNex.add_handler(ResetHandlerObject) 
+AuthNex.add_handler(accounts) 
 
 
 if __name__=="__main__":
