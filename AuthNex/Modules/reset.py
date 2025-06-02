@@ -8,9 +8,13 @@ import asyncio as AsyncIO
 from config import SUDO
 from AuthNex.Database import user_col as User
 
-async def reset(_, m: Message):
-    # Check if any user exists
-    if not User.find_one({}):
+# Reset command function
+async def reset_handler(_, m: Message):
+    user_id = m.from_user.id
+
+    # Check if database has any data
+    data = User.find_one({"_id": user_id})
+    if not data:
         await m.reply_text("🧐") 
         await AsyncIO.sleep(1) 
         await m.delete() 
@@ -20,22 +24,23 @@ async def reset(_, m: Message):
     await m.reply("🧐") 
     await AsyncIO.sleep(1) 
     sync = await m.reply("Deleting...") 
-    
-    last_bar = ""
+
     for bar in Bars:
         await sync.edit_text(f"```shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}```", parse_mode=ParseMode.MARKDOWN)
-        last_bar = bar
         await AsyncIO.sleep(1)
 
-    # Drop user data (you can replace this with User.delete_many({}) or proper cleanup)
-    User.delete_many({})
+    # Optionally delete the data
+    User.delete_one({"_id": user_id})
 
-    await sync.edit_text(f"✅ 𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔻𝕒𝕥𝕒 𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕔𝕝𝕖𝕒𝕣.\n{last_bar}")
+    await sync.edit_text(
+        f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{Bars[-1]}"
+    )
 
-# Register handler
+# Proper handler (with correct filters)
 reset_handler = MessageHandler(
-    reset, 
-    filters.command('reset') & (filters.group | filters.private) & filters.user(SUDO)
+    reset_handler,
+    filters.command("reset") & (filters.private | filters.group) & filters.user(SUDO)
 )
 
-
+# Add this to your main.py file:
+# app.add_handler(reset_handler_obj)
