@@ -37,7 +37,7 @@ async def reset_handler(_, m: Message):
     )
 
 # Proper handler (with correct filters)
-ResettHandlerObject = MessageHandler(
+ResetHandlerObject = MessageHandler(
     reset_handler,
     filters.command("reset") & (filters.private | filters.group) & filters.user(SUDO)
 )
