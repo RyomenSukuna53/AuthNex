@@ -25,7 +25,7 @@ async def reset_handler(_, m: Message):
     "▰▰▰▰▰▰▰▰▰▰ 100%"
     ]
     
-    data = user_col.find({})
+    data = await user_col.find({})
     if not data:
         await m.reply_text("🧐") 
         await asyncio.sleep(1) 
@@ -43,7 +43,7 @@ async def reset_handler(_, m: Message):
         await asyncio.sleep(1)
 
     # Optionally delete the data
-    user_col.delete({})
+    await user_col.delete({})
 
     await sync.edit_text(
         f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒𝕓𝕒𝕤𝕖 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{bars[-1]}"
