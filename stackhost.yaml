@@ -8,7 +8,7 @@ commands:
   build:
     - "pip install -r requirements.txt"
   start:
-    - "python3 __main__.py"
+    - "python3 main.py"
 
 env:
   - "ENVIRONMENT=production"
