@@ -17,4 +17,4 @@ async def logs_handler(_, m: Message):
         logs_text = "```shell\n⚠️ ERROR LOGS (truncated):\n\n" + "\n".join(LOGS[-25:]) + "\n```"
     await m.reply_text(logs_text, parse_mode=ParseMode.MARKDOWN)
 
-app.add_handler(MessageHandler(logs_handler, filters.command("logs") & filters.user(SUDO_USER)))
+logs = MessageHandler(logs_handler, filters.command("logs") & filters.user(SUDO_USER))
