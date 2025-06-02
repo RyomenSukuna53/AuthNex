@@ -1,11 +1,10 @@
-from AuthNex import app as AuthNex 
 from pyrogram import Client, filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from AuthNex import app as AuthNex 
-from AuthNex.Database import user_col
+from AuthNex.Database import user_col as User
 import random
-import asyncio as AsyncIO
+import asyncio
 from pyrogram.handlers import MessageHandler
 from config import * 
 from AuthNex.Bars import Bars
@@ -25,12 +24,13 @@ async def reset_handler(_, m: Message):
         return 
 
     await m.reply("🧐") 
-    await AsyncIO.sleep(1) 
+    await asyncio.sleep(1) 
+    await m.delete() 
     sync = await m.reply("Deleting...") 
 
     for bar in Bars:
         await sync.edit_text(f"```shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}```", parse_mode=ParseMode.MARKDOWN) 
-        await AsyncIO.sleep(1)
+        await asyncio.sleep(1)
 
     # Optionally delete the data
     User.delete({})
