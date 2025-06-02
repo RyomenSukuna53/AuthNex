@@ -2,13 +2,13 @@ from AuthNex import app as AuthNex
 from pyrogram import Client 
 from AuthNex.Modules.start import start 
 from AuthNex.Modules.register import acc_start
-from AuthNex.Modules.reset import reset_handler 
+from AuthNex.Modules.reset import ResetHandlerObject 
 from AuthNex.Modules.register import acc_steps
 
 AuthNex.add_handler(start) 
 AuthNex.add_handler(acc_start) 
 AuthNex.add_handler(acc_steps) 
-AuthNex.add_handler(reset_handler) 
+AuthNex.add_handler(ResetHandlerObject) 
 
 
 if __name__=="__main__":
