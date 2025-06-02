@@ -26,8 +26,7 @@ async def reset_handler(_, m: Message):
     sync = await m.reply("Deleting...") 
 
     for bar in Bars:
-        await sync.edit_text(f"
-shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}") 
+        await sync.edit_text(f"```shell\n𝔻𝔼𝕃𝔼𝕋𝕀ℕ𝔾...\n{bar}```", parse_mode=ParseMode.MARKDOWN) 
         await AsyncIO.sleep(1)
 
     # Optionally delete the data
