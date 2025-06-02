@@ -6,7 +6,7 @@ from pyrogram.types import Message
 from pyrogram.handlers import MessageHandler
 import asyncio as AsyncIO 
 from config import SUDO
-from Database import user_col as User
+from AuthNex.Database import user_col as User
 
 async def reset(_, m: Message):
     if not User.find({"_id": None}):
