@@ -13,7 +13,7 @@ Enjoy reliable performance (⁠◍⁠•⁠ᴗ⁠•⁠◍⁠)
 Owner: @M15T3R_C0D3R
 Ceo: @Uzumaki_X_Naruto6
 
-[𝗡𝗢𝗧𝗘] Use /register to create your account. 
+[𝗡𝗢𝗧𝗘] Use /create_acc to create your account. 
 """) 
 
 start = MessageHandler(start_commands, filters.command('start') & (filters.private | filters.group)) 
