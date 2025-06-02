@@ -11,14 +11,9 @@ AuthNex.add_handler(acc_start)
 from AuthNex.Modules.register import acc_steps
 AuthNex.add_handler(acc_steps) 
 
-from AuthNex.Modules.reset import del_acc 
-AuthNex.add_handler(del_acc) 
+from AuthNex.Modules.reset import reset 
+AuthNex.add_handler(reset) 
 
-from AuthNex.Modules.accounts import all_logins 
-AuthNex.add_handler(all_logins) 
-
-from AuthNex.Modules.logs import logs 
-AuthNex.add_handler(logs) 
 
 if __name__=="__main__":
   AuthNex.run() 
