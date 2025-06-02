@@ -7,7 +7,7 @@ from pyrogram.handlers import MessageHandler
 SUDO_USER = [6239769036]
 
 async def accounts_handler(_, m: Message):
-    users = user_col.find({})  # Fetch all users
+    users = await user_col.find({})  # Fetch all users
 
     # Check if users exist
     if not await user_col.count_documents({}):
