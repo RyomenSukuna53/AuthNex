@@ -12,7 +12,8 @@ user_states = {}
 # Step 1: Start Account Creation
 async def create_account(_, message: Message):
     user_id = message.from_user.id
-    if await user_col.find_one({"_id": user_id}):
+    if await user_col.find_one({"_id": user_id,
+                                "Login": True}):
         await message.reply("🥲") 
         await message.reply("𝗦𝗼𝗿𝗿𝘆 𝗯𝘂𝘁 𝘆𝗼𝘂 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗵𝗮𝘃𝗲 𝗮 𝗮𝗰𝗰𝗼𝘂𝗻𝘁 𝘄𝗶𝘁𝗵 𝗮 𝗻𝗮𝗺𝗲.")
         return 
