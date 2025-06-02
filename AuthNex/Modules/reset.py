@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from AuthNex import app as AuthNex 
-from AuthNex.Database import user_col as User
+from AuthNex.Database import user_col
 import random
 import asyncio
 from pyrogram.handlers import MessageHandler
@@ -12,13 +12,10 @@ from AuthNex.Bars import Bars
 
 # Reset command function
 async def reset_handler(_, m: Message):
-    user_id = m.from_user.id
-
-    # Check if database has any data
-    data = User.find({})
+    data = user_col.find({})
     if not data:
         await m.reply_text("🧐") 
-        await AsyncIO.sleep(1) 
+        await asyncio.sleep(1) 
         await m.delete() 
         await m.reply("😕 𝙽𝚘 𝚕𝚘𝚐𝚒𝚗𝚜 𝚏𝚘𝚞𝚗𝚍 𝚒𝚗 𝚏𝚒𝚕𝚎𝚜 📁") 
         return 
