@@ -12,6 +12,10 @@ user_states = {}
 # Step 1: Start Account Creation
 async def create_account(_, message: Message):
     user_id = message.from_user.id
+    if await user_col.find_one({"_id": user_id}):
+        await message.reply("🥲") 
+        await message.reply("𝗦𝗼𝗿𝗿𝘆 𝗯𝘂𝘁 𝘆𝗼𝘂 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗵𝗮𝘃𝗲 𝗮 𝗮𝗰𝗰𝗼𝘂𝗻𝘁 𝘄𝗶𝘁𝗵 𝗮 𝗻𝗮𝗺𝗲.")
+        return 
     user_states[user_id] = {"step": "name", "user_id": user_id}
     await message.reply("[ℍ𝗢𝕊𝗧] ==> 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝘆𝗼𝘂𝗿 𝗻𝗮𝗺𝗲 𝗳𝗶𝗿𝘀𝘁.")
 
@@ -40,6 +44,11 @@ async def handle_register_step(_, message: Message):
 
     # Step: NAME
     if state["step"] == "name":
+        if await user_col.find_one({"Name": message.text}):
+            await message.reply("😔")
+            await message.reply("𝚂𝚘𝚛𝚛𝚢 𝚋𝚞𝚝 𝚝𝚑𝚎 𝙽𝚊𝚖𝚎 𝚒𝚜 𝙰𝚕𝚛𝚎𝚊𝚍𝚢 𝚝𝚊𝚔𝚎𝚗 𝚋𝚢 𝚜𝚘𝚖𝚎𝚘𝚗𝚎") 
+            return 
+
         if len(text) < 2:
             return await message.reply("⚠️ Name should be at least 2 characters.")
         state["name"] = text
@@ -58,6 +67,8 @@ async def handle_register_step(_, message: Message):
     elif state["step"] == "mail":
         if not text.endswith("@AuthNex.Codes") or " " in text:
             return await message.reply("⚠️ Mail must end with @AuthNex.Codes and have no spaces.")
+        if await user_col.find_one({"Mail": message.text}):
+            await message.reply("💔 𝚂𝚘𝚛𝚛𝚢 𝚃𝚑𝚎 𝙼𝚊𝚒𝚕 𝙸𝚜 𝙰𝚕𝚛𝚎𝚊𝚍𝚢 𝚃𝚊𝚔𝚎𝚗 𝚋𝚢 𝚜𝚘𝚖𝚎 𝚘𝚗𝚎 𝚎𝚕𝚜𝚎") 
         state["mail"] = text
         state["step"] = "password"
         return await message.reply("[ℍ𝗢𝕊𝗧] ==> 𝗡𝗼𝘄 𝗰𝗿𝗲𝗮𝘁𝗲 𝗮 𝘀𝘁𝗿𝗼𝗻𝗴 𝗽𝗮𝘀𝘀𝘄𝗼𝗿𝗱 (𝗮𝘁 𝗹𝗲𝗮𝘀𝘁 𝟲 𝗰𝗵𝗮𝗿𝘀)")
