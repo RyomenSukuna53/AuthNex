@@ -8,7 +8,7 @@ commands:
   build:
     - "pip install -r requirements.txt"
   start:
-    - "python3 main.py"
+    - "python3 -m AuthNex"
 
 env:
   - "ENVIRONMENT=production"
