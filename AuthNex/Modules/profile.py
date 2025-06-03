@@ -27,7 +27,7 @@ async def info(_, m: Message):
         reply += f"**AUTH-COINS:** `{user['AuthCoins']}`\n"
         reply += f"**LOGINED-BY:** `[{session['name']}](tg://user?id={session['_id']})\n"
         reply += f"**LAST LOGIN:** {session['login']}"
-        await m.reply(reply)
+        await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
         return 
     if MySession:
         reply += f"**NAME:** `{user['Name']}|\n"
@@ -35,5 +35,5 @@ async def info(_, m: Message):
         reply += f"**AUTH-COINS:** `{user['AuthCoins']}`\n"
         reply += f"**OWNER:** `[{user['Onwer']}](tg://user?id={session['_id']})\n"
         reply += f"**LAST LOGIN:** {session['login']}"
-        await m.reply(reply)
+        await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
     
