@@ -5,7 +5,7 @@ from AuthNex import bot
 from AuthNex.Database import user_col, session_col
 
 
-@Client.on_message(filters.command('info')
+@Client.on_message(filters.command('info'))
 async def info(_, m: Message):
     user = message.from_user
     _id = user.id
