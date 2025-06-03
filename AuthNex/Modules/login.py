@@ -7,13 +7,13 @@ from AuthNex import app
 
 login_state = {}
 
-@app.on_message(filters.command('login') & (filters.private))
+@Client.on_message(filters.command('login') & (filters.private))
 async def start_login(_, message: Message):
     user_id = message.from_user.id
     login_state[user_id] = {"step": "mail"}
     await message.reply("📧 Please enter your mail to login:")
 
-@app.on_message(filters.text & (filters.private)) 
+@Client.on_message(filters.text & (filters.private)) 
 async def handle_login_input(_, message: Message):
     user_id = message.from_user.id
     if user_id not in login_state:
