@@ -34,4 +34,4 @@ accounts_handler_obj = MessageHandler(
 )
 
 # In your main.py or init file:
-app.add_handler(accounts_handler_obj)
+
