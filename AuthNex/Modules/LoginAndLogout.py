@@ -2,8 +2,8 @@ from pyrogram import filters
 from pyrogram.types import Message
 from pyrogram.handlers import MessageHandler
 from AuthNex import app
-from AuthNex.Database import user_col, sessions_col
 import datetime
+from AuthNex.Database import user_col, sessions_col
 
 
 login_state = {}
@@ -89,3 +89,7 @@ logout = MessageHandler(logout, filters.command("logout") & filters.private)
 profile = MessageHandler(whoami, filters.command("profile") & filters.private)
 
 
+app.add_handler(login1)
+app.add_handler(login2)
+app.add_handler(logout)
+app.add_handler(profile)
