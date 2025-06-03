@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.enums import ParseMode, ChatType
 from AuthNex import app
-from AuthNex.Database import user_col, session_col
+from AuthNex.Database import user_col, sessions_col
 
 
 @Client.on_message(filters.command('info'))
