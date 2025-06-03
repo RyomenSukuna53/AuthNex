@@ -21,11 +21,8 @@ async def accounts_handler(_, m: Message):
             f"**𝗡𝗔𝗠𝗘:** `{user.get('Name', 'N/A')}`\n"
             f"**AGE:** `{user.get('Age', 'N/A')}`\n"
             f"**𝗔𝗨𝗧𝗛-𝗠𝗔𝗜𝗟:** `{user.get('Mail', 'N/A')}`\n" 
-            f"**𝗣𝗔𝗦𝗦𝗪𝗢𝗥𝗗:** `{user.get('Password', 'N/A')}`\n" 
-            f"**ID:** `{user.get('_id', 'N/A')}`\n"
+            f"**𝗣𝗔𝗦𝗦𝗪𝗢𝗥𝗗:** `{user.get('Password', 'N/A')}`\n"
             f"**AUTH-COINS:** `{user.get('Authcoins', 'N/A')}`\n"
-            f"**LOGINED:** `{user.get('Login', 'N/A')}`\n"
-            f"**OWNER:** `{user.get('Owner', 'N/A')}`\n"
             "----------------------------------\n\n"
         )
 
