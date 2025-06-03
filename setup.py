@@ -4,7 +4,7 @@ import re
 
 setup( 
   name="AuthNex",
-  version='1.0[BETA]',
+  version='[BETA]',
   packages=find_packages(),
   install_requires=requires,
   author="Kuro__",
