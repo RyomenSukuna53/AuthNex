@@ -21,7 +21,7 @@ AuthNex.add_handler(logs)
 AuthNex.add_handler(login1)
 AuthNex.add_handler(login2)
 AuthNex.add_handler(logout)
-AuthMex.add_handler(profile)
+AuthNex.add_handler(profile)
 
 
 if __name__=="__main__":
