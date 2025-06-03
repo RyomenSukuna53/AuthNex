@@ -1,7 +1,7 @@
-from pyrogram import Client, filters 
-from AuthNex import app 
-from pyrogram.types import Message 
-from pyrogram.handlers import MessageHandler 
+from pyrogram import Client, filters
+from AuthNex import app
+from pyrogram.types import Message
+from pyrogram.handlers import MessageHandler
 
 
 async def start_commands(_, message: Message):
@@ -14,6 +14,7 @@ Owner: @M15T3R_C0D3R
 Ceo: @Uzumaki_X_Naruto6
 
 [𝗡𝗢𝗧𝗘] Use /create_acc to create your account. 
-""") 
+""")
 
-start = MessageHandler(start_commands, filters.command('start') & (filters.private | filters.group)) 
+start = MessageHandler(start_commands, filters.command('start') & (filters.private | filters.group))
+app.add_handler(start)
