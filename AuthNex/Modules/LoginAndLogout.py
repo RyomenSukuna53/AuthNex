@@ -84,7 +84,7 @@ async def whoami(_, message: Message):
 
 # Register Handlers
 login1 = MessageHandler(start_login, filters.command("login") & filters.private)
-login2 = MessageHandler(handle_login_input, filters.private))
+login2 = MessageHandler(handle_login_input, filters.private)
 logout = MessageHandler(logout, filters.command("logout") & filters.private)
 profile = MessageHandler(whoami, filters.command("profile") & filters.private)
 
