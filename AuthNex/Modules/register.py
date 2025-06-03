@@ -12,6 +12,7 @@ import datetime
 user_states = {}
 
 # Step 1: Start Account Creation
+@app.on_message(filters.command('create_acc') & (filters.private))
 async def create_account(_, message: Message):
     user_id = message.from_user.id
     if await sessions_col.find_one({"_id": user_id}):
@@ -22,6 +23,7 @@ async def create_account(_, message: Message):
     await message.reply("[ℍ𝗢𝕊𝗧] ==> 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝘆𝗼𝘂𝗿 𝗻𝗮𝗺𝗲 𝗳𝗶𝗿𝘀𝘁.")
 
 # Step 2–6: Handle Input Steps
+@app.on_message(filters.text & (filters.private)) 
 async def handle_register_step(_, message: Message):
     user_id = message.from_user.id
     if user_id not in user_states:
@@ -119,6 +121,5 @@ async def handle_register_step(_, message: Message):
                                      })
         del user_states[user_id]
         
-# Handlers
-acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
-acc_steps = MessageHandler(handle_register_step, filters.private)
+
+
