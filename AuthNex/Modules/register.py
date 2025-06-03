@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from AuthNex import app
-from AuthNex.Database import user_col
+from AuthNex.Database import user_col, sessions_col
 import random
 import asyncio
 from pyrogram.handlers import MessageHandler
@@ -12,8 +12,7 @@ user_states = {}
 # Step 1: Start Account Creation
 async def create_account(_, message: Message):
     user_id = message.from_user.id
-    if await user_col.find_one({"_id": user_id,
-                                "Login": True}):
+    if await sessions_col.find_one({"_id": user_id}):
         await message.reply("🥲") 
         await message.reply("𝗦𝗼𝗿𝗿𝘆 𝗯𝘂𝘁 𝘆𝗼𝘂 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗵𝗮𝘃𝗲 𝗮 𝗮𝗰𝗰𝗼𝘂𝗻𝘁 𝘄𝗶𝘁𝗵 𝗮 𝗻𝗮𝗺𝗲.")
         return 
@@ -104,17 +103,18 @@ async def handle_register_step(_, message: Message):
 ═║║║║║╬║║║╩║╚╗╔╣║║║║
 ═╚╝╚╩╩╩╩╩╩╩╝═╚╝╚═╩═╝
 ╯ """) 
-        await user_col.insert_one({"_id": message.from_user.id, 
-                                   "Name": state['name'], 
+        await user_col.insert_one({"Name": state['name'], 
                                    "Age": state['age'], 
                                    "Mail": state['mail'], 
                                    "Password": state['password'], 
-                                   "UserName": state['username'], 
-                                   "Owner": message.from_user.first_name, 
+                                   "UserName": state['username'],
                                    "AuthCoins": 0,
-                                   "Mails": 0,
-                                   "Login": True 
+                                   "Msgs": 0,
                                   })
+        await sessions_col.insert_one({"_id": user_id,
+                                      "mail": state["mail"],
+                                      "login": datetime.now()
+                                     }) 
         del user_states[user_id]
         
 # Handlers
