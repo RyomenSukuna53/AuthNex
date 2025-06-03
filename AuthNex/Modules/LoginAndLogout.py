@@ -88,7 +88,3 @@ logout = MessageHandler(logout, filters.command("logout") & filters.private)
 profile = MessageHandler(whoami, filters.command("profile") & filters.private)
 
 
-app.add_handler(login1)
-app.add_handler(login2)
-app.add_handler(logout)
-app.add_handler(profile)
