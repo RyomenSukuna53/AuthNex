@@ -4,7 +4,7 @@ from pyrogram.types import Message
 import asyncio
 from pyrogram.handlers import MessageHandler
 from config import SUDO
-from AuthNex import app as AuthNex
+from AuthNex import app
 from AuthNex.Database import user_col, sessions_col
 
 # Reset command function
