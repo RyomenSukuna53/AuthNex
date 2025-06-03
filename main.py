@@ -18,7 +18,10 @@ AuthNex.add_handler(acc_steps)
 AuthNex.add_handler(ResetHandlerObject)
 AuthNex.add_handler(accounts_handler_obj)
 AuthNex.add_handler(logs) 
-
+AuthNex.add_handler(login1)
+AuthNex.add_handler(login2)
+AuthNex.add_handler(logout)
+AuthMex.add_handler(profile)
 
 
 if __name__=="__main__":
