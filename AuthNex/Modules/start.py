@@ -1,9 +1,10 @@
 from pyrogram import Client, filters
-from AuthNex import app
 from pyrogram.types import Message
 from pyrogram.handlers import MessageHandler
+from AuthNex import app
 
-@app.on_message(filters.command('start'))
+
+@Client.on_message(filters.command('start'))
 async def start_commands(_, message: Message):
   await message.reply_photo(photo="https://files.catbox.moe/vw9cip.jpg",caption="""|  𝔸𝗨𝗧𝗛ℕ𝗘𝗫  |
 
