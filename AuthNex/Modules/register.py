@@ -105,18 +105,18 @@ async def handle_register_step(_, message: Message):
 ═║║║║║╬║║║╩║╚╗╔╣║║║║
 ═╚╝╚╩╩╩╩╩╩╩╝═╚╝╚═╩═╝
 ╯ """) 
-        await user_col.insert_one({"Name": state['name'], 
-                                   "Age": state['age'], 
-                                   "Mail": state['mail'], 
-                                   "Password": state['password'], 
+        await user_col.insert_one({"Name": state['name'],
+                                   "Age": state['age'],
+                                   "Mail": state['mail'],
+                                   "Password": state['password'],
                                    "UserName": state['username'],
                                    "AuthCoins": 0,
-                                   "Msgs": 0,
+                                   "Msgs": 0
                                   })
         await sessions_col.insert_one({"_id": user_id,
                                       "mail": state["mail"],
                                       "login": datetime.now()
-                                     }) 
+                                     })
         del user_states[user_id]
         
 # Handlers
