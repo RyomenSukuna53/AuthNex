@@ -115,7 +115,7 @@ async def handle_register_step(_, message: Message):
                                   })
         await sessions_col.insert_one({"_id": user_id,
                                       "mail": state["mail"],
-                                      "login": datetime.now()
+                                      "login": datetime.datetime.utcnow()
                                      })
         del user_states[user_id]
         
