@@ -54,4 +54,4 @@ ResetHandlerObject = MessageHandler(
 )
 
 # Register the handler
-AuthNex.add_handler(ResetHandlerObject)
+
