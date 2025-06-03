@@ -17,4 +17,4 @@ Ceo: @Uzumaki_X_Naruto6
 """)
 
 start = MessageHandler(start_commands, filters.command('start') & (filters.private | filters.group))
-app.add_handler(start)
+
