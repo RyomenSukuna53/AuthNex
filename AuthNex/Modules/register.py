@@ -12,7 +12,7 @@ import datetime
 user_states = {}
 
 # Step 1: Start Account Creation
-@app.on_message(filters.command('create_acc') & (filters.private))
+@Client.on_message(filters.command('create_acc') & (filters.private))
 async def create_account(_, message: Message):
     user_id = message.from_user.id
     if await sessions_col.find_one({"_id": user_id}):
