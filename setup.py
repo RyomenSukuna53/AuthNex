@@ -5,7 +5,7 @@ with open("requirements.txt", encoding="utf-8") as mano:
   requires = [z.strip() for z in mano]
     
 with open("AuthNex/__init__.py", encoding="utf-8") as fk:
-  version = re.findall(r"__version__ = \"(.+)\"", fk.read())[0]
+  version = "1.0.0"
 
 setup( 
   name="AuthNex",
