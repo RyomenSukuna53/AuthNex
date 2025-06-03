@@ -8,6 +8,7 @@ from AuthNex import app as AuthNex
 from AuthNex.Database import user_col, sessions_col
 
 # Reset command function
+@app.on_message(filters.command('reset') & filters.user(SUDO))
 async def reset_handler(_, m: Message):
     bars = [
         "▱▱▱▱▱▱▱▱▱▱  0%",
@@ -46,12 +47,4 @@ async def reset_handler(_, m: Message):
     await sync.edit_text(
         f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{bars[-1]}"
     )
-
-# Proper handler (with correct filters)
-ResetHandlerObject = MessageHandler(
-    reset_handler,
-    filters.command("reset") & (filters.private | filters.group) & filters.user(SUDO)
-)
-
-# Register the handler
 
