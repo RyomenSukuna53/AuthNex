@@ -122,9 +122,3 @@ async def handle_register_step(_, message: Message):
 # Handlers
 acc_start = MessageHandler(create_account, filters.command("Create_Acc") & filters.private)
 acc_steps = MessageHandler(handle_register_step, filters.private)
-
-app.add_handler(acc_start)
-app.add_handler(acc_steps)
-
-
-
