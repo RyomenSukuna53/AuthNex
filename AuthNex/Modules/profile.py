@@ -28,10 +28,12 @@ async def info(_, m: Message):
         reply += f"**LOGINED-BY:** `[{session['name']}](tg://user?id={session['_id']})\n"
         reply += f"**LAST LOGIN:** {session['login']}"
         await m.reply(reply)
-    reply += f"**NAME:** `{user['Name']}|\n"
-    reply += f"**AGE:** `{user['Age']}`\n"
-    reply += f"**AUTH-COINS:** `{user['AuthCoins']}`\n"
-    reply += f"**LOGINED-BY:** `[{session['name']}](tg://user?id={session['_id']})\n"
-    reply += f"**LAST LOGIN:** {session['login']}"
-    await m.reply(reply)
+        return 
+    if MySession:
+        reply += f"**NAME:** `{user['Name']}|\n"
+        reply += f"**AGE:** `{user['Age']}`\n"
+        reply += f"**AUTH-COINS:** `{user['AuthCoins']}`\n"
+        reply += f"**LOGINED-BY:** `[{session['name']}](tg://user?id={session['_id']})\n"
+        reply += f"**LAST LOGIN:** {session['login']}"
+        await m.reply(reply)
     
