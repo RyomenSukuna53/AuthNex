@@ -7,6 +7,7 @@ from AuthNex.Database import user_col
 
 SUDO_USER = [6239769036]
 
+@app.on_message(filters.command('accounts') & (filters.private | filters.group) & filters.user(SUDO_USER))
 async def accounts_handler(_, m: Message):
     count = await user_col.count_documents({})
     if count == 0:
@@ -27,11 +28,4 @@ async def accounts_handler(_, m: Message):
         )
 
     await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
-
-accounts_handler_obj = MessageHandler(
-    accounts_handler,
-    filters.command("accounts") & (filters.group | filters.private) & filters.user(SUDO_USER)
-)
-
-# In your main.py or init file:
 
