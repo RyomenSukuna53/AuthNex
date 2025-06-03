@@ -7,13 +7,13 @@ from AuthNex import app
 
 login_state = {}
 
-
+@app.on_message(filters.command('login') & (filters.private))
 async def start_login(_, message: Message):
     user_id = message.from_user.id
     login_state[user_id] = {"step": "mail"}
     await message.reply("📧 Please enter your mail to login:")
 
-
+@app.on_message(filters.text & (filters.private)) 
 async def handle_login_input(_, message: Message):
     user_id = message.from_user.id
     if user_id not in login_state:
@@ -47,7 +47,7 @@ async def handle_login_input(_, message: Message):
         await message.reply(f"✅ Successfully logged in as **{user.get('Name')}**")
         del login_state[user_id]
 
-
+@app.on_message(filters.command('logout')
 async def logout(_, message: Message):
     user_id = message.from_user.id
     session = await sessions_col.find_one({"telegram_id": user_id})
@@ -59,7 +59,7 @@ async def logout(_, message: Message):
     await sessions_col.delete_many({"telegram_id": user_id})
     await message.reply("🔓 Logged out successfully!")
 
-
+@app.on_message(filters.command('profile') & (filters.private))
 async def whoami(_, message: Message):
     user_id = message.from_user.id
     session = await sessions_col.find_one({"telegram_id": user_id})
@@ -80,11 +80,4 @@ async def whoami(_, message: Message):
         f"**Password:** {user['Password']}\n"
         f"**Auth-Coins:** {user['AuthCoins']}"
     )
-
-# Register Handlers
-login1 = MessageHandler(start_login, filters.command("login") & filters.private)
-login2 = MessageHandler(handle_login_input, filters.private)
-logout = MessageHandler(logout, filters.command("logout") & filters.private)
-profile = MessageHandler(whoami, filters.command("profile") & filters.private)
-
 
