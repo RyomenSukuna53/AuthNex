@@ -47,37 +47,3 @@ async def handle_login_input(_, message: Message):
         await message.reply(f"✅ Successfully logged in as **{user.get('Name')}**")
         del login_state[user_id]
 
-@app.on_message(filters.command('logout'))
-async def logout(_, message: Message):
-    user_id = message.from_user.id
-    session = await sessions_col.find_one({"telegram_id": user_id})
-    if not session:
-        await message.reply("❌ You are not logged in.")
-        return
-    
-    
-    await sessions_col.delete_many({"telegram_id": user_id})
-    await message.reply("🔓 Logged out successfully!")
-
-@app.on_message(filters.command('profile') & (filters.private))
-async def whoami(_, message: Message):
-    user_id = message.from_user.id
-    session = await sessions_col.find_one({"telegram_id": user_id})
-    if not session:
-        await message.reply("❌ You are not logged in.")
-        return
-
-    user = await user_col.find_one({"Mail": session["mail"]})
-    if not user:
-        await message.reply("⚠️ Account not found.")
-        return
-
-    await message.reply(
-        f"🧾 You are logged in as:\n\n"
-        f"**Name:** {user['Name']}\n"
-        f"**Mail:** {user['Mail']}\n"
-        f"**Age:** {user['Age']}\n"
-        f"**Password:** {user['Password']}\n"
-        f"**Auth-Coins:** {user['AuthCoins']}"
-    )
-
