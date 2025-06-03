@@ -5,3 +5,4 @@ Database = AsyncIOMotorClient(MONGO_URI)
 AuthNex = Database["AuthNex"]
 user_col = AuthNex["USER_LOGINS"]
 ban_col = AuthNex["BANNED_USERS"]
+sessions_col = AuthNex["SESSIONS"]
