@@ -55,7 +55,8 @@ async def logout(_, message: Message):
     if not session:
         await message.reply("❌ You are not logged in.")
         return
-
+    
+    
     await sessions_col.delete_many({"telegram_id": user_id})
     await message.reply("🔓 Logged out successfully!")
 
