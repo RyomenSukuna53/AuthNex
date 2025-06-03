@@ -47,7 +47,7 @@ async def handle_login_input(_, message: Message):
         await message.reply(f"✅ Successfully logged in as **{user.get('Name')}**")
         del login_state[user_id]
 
-@app.on_message(filters.command('logout')
+@app.on_message(filters.command('logout'))
 async def logout(_, message: Message):
     user_id = message.from_user.id
     session = await sessions_col.find_one({"telegram_id": user_id})
