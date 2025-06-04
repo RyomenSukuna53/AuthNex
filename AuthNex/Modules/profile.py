@@ -1,8 +1,8 @@
+from AuthNex import app
+from AuthNex.Database import user_col, sessions_col
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.enums import ParseMode, ChatType
-from AuthNex import app
-from AuthNex.Database import user_col, sessions_col
 
 
 @Client.on_message(filters.command('info'))
@@ -11,7 +11,7 @@ async def info(_, m: Message):
     _id = user.id
     if len(m.text) != 2:
         return await m.reply_text("**𝗜𝗻𝘃𝗮𝗹𝗶𝗱 ❌**\n𝗨𝗦𝗔𝗚𝗘: /info <mail>")
-    text = message.text[1]
+    text = m.text[1]
     if not text.endswith("@AuthNex.Codes"):
         return await m.reply("**Invalid ❌**\n𝗨𝗦𝗔𝗚𝗘: /info <mail>[Ensure that mail ends with @AuthNex.Codes")
     mail = m.text[1]
