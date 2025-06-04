@@ -36,4 +36,3 @@ async def info(_, m: Message):
         reply += f"**OWNER:** `[{user['Onwer']}](tg://user?id={session['_id']})\n"
         reply += f"**LAST LOGIN:** {session['login']}"
         await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
-    
