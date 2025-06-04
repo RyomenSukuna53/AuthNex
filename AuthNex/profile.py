@@ -10,10 +10,10 @@ async def info(_, m: Message):
     user = m.from_user
     _id = user.id
     if len(m.text) != 2:
-        return await m.reply_text("**𝗜𝗻𝘃𝗮𝗹𝗶𝗱 ❌**\n𝗨𝗦𝗔𝗚𝗘: /info <mail>")
+        return await m.reply_text("**𝗜𝗻𝘃𝗮𝗹𝗶𝗱 ❌**\n𝗨𝗦𝗔𝗚𝗘: /info mail")
     text = m.text[1]
     if not text.endswith("@AuthNex.Codes"):
-        return await m.reply("**Invalid ❌**\n𝗨𝗦𝗔𝗚𝗘: /info <mail>[Ensure that mail ends with @AuthNex.Codes")
+        return await m.reply("**Invalid ❌**\n𝗨𝗦𝗔𝗚𝗘: /info mail [Ensure that mail ends with @AuthNex.Codes")
     mail = m.text[1]
     user = await user_col.find_one({"Mail": mail})
     session = await sessions_col.find_one({"mail": mail})
