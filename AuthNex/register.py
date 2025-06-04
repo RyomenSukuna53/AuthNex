@@ -10,7 +10,7 @@ from AuthNex.Database import user_col, sessions_col
 user_states = {}
 
 # Step 1: Start Account Creation
-@Client.on_message(filters.command('create_acc') & (filters.private))
+@Client.on_message(filters.command('create_acc') & (filters.private), group=1)
 async def create_account(_, message: Message):
     user_id = message.from_user.id
     if await sessions_col.find_one({"_id": user_id}):
