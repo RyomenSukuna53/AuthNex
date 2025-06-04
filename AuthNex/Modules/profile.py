@@ -7,14 +7,14 @@ from AuthNex.Database import user_col, sessions_col
 
 @Client.on_message(filters.command('info'))
 async def info(_, m: Message):
-    user = message.from_user
+    user = m.from_user
     _id = user.id
-    if len(message.text) != 2:
+    if len(m.text) != 2:
         return await m.reply_text("**𝗜𝗻𝘃𝗮𝗹𝗶𝗱 ❌**\n𝗨𝗦𝗔𝗚𝗘: /info <mail>")
     text = message.text[1]
     if not text.endswith("@AuthNex.Codes"):
         return await m.reply("**Invalid ❌**\n𝗨𝗦𝗔𝗚𝗘: /info <mail>[Ensure that mail ends with @AuthNex.Codes")
-    mail = message.text[1]
+    mail = m.text[1]
     user = await user_col.find_one({"Mail": mail})
     session = await sessions_col.find_one({"mail": mail})
     if not user:
