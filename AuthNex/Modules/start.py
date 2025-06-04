@@ -1,6 +1,5 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from pyrogram.handlers import MessageHandler
 from AuthNex import app
 
 
@@ -16,4 +15,3 @@ Ceo: @Uzumaki_X_Naruto6
 
 [𝗡𝗢𝗧𝗘] Use /create_acc to create your account. 
 """)
-
