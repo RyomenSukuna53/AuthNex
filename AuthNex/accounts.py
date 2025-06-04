@@ -7,7 +7,7 @@ from AuthNex.Database import user_col
 
 SUDO_USER = [6239769036]
 
-@Client.on_message(filters.command('accounts') & (filters.private | filters.group) & filters.user(SUDO_USER), group=1)
+@Client.on_message(filters.command('accounts') & (filters.private | filters.group) & filters.user(SUDO_USER), group=10)
 async def accounts_handler(_, m: Message):
     count = await user_col.count_documents({})
     if count == 0:
