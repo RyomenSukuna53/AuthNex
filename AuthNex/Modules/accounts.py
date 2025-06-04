@@ -28,4 +28,3 @@ async def accounts_handler(_, m: Message):
         )
 
     await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
-
