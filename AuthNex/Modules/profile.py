@@ -30,9 +30,9 @@ async def info(_, m: Message):
         await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
         return 
     if MySession:
-        reply += f"**NAME:** `{user_col.get('Name')}`\n"
+        reply += f"**NAME:** `{user_col.get('Name')}|\n"
         reply += f"**AGE:** `{user_col.get('Age')}`\n"
-        reply += f"**AUTH-COINS:** `{user_col.get('AuthaCoins')}`\n"
-        reply += f"**OWNER:** `[{user_col.get('Onwer')](tg://user?id={session['_id']})\n"
+        reply += f"**AUTH-COINS:** `{user_col.get('AuthCoins')}`\n"
+        reply += f"**LOGINED-BY:** `[{sessions_col.get('name')}](tg://user?id={sessions_col.get('_id')})\n"
         reply += f"**LAST LOGIN:** {sessions_col.get('login')}"
         await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
