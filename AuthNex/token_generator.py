@@ -9,7 +9,7 @@ def generate_authnex_token(length=32):
     return secrets.token_hex(length // 2)  # length in hex digits
 
 
-@Client.on_message(filters.command("generatetoken") & filters.private, group=1)
+@Client.on_message(filters.command("generatetoken") & filters.private, group=11)
 async def token_generator(Client, message: Message):
     user = message.from_user
     user_id = user.id
