@@ -1,6 +1,5 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from pyrogram.enums import ParseMode, ChatType
 from AuthNex.__init__ import app
 from AuthNex.Database import user_col, sessions_col, ban_col
 import secrets
@@ -10,21 +9,54 @@ def generate_authnex_token(length=32):
     return secrets.token_hex(length // 2)  # length in hex digits
 
 
-@Client.on_message(filters.command("generatetoken"))
-async def token_generator(_, Message):
-    user = Message.from_user
-    _id = user.id
-    session = await sessions_col.find_one({"_id": _id})
+@app.on_message(filters.command("generatetoken") & filters.private)
+async def token_generator(client, message: Message):
+    user = message.from_user
+    user_id = user.id
+
+    # Check if user is banned
+    banned = await ban_col.find_one({"_id": user_id})
+    if banned:
+        return await message.reply("🚫 You are banned from using AuthNex.")
+
+    # Check session
+    session = await sessions_col.find_one({"_id": user_id})
     if not session:
-        return await Message.reply("❌ 𝙽𝚘 𝙻𝚘𝚐𝚒𝚗 𝚏𝚘𝚞𝚗𝚍")
-    if session:
-        await Message.reply("🔑 𝙀𝙣𝙩𝙚𝙧 𝙮𝙤𝙪𝙧 𝙋𝙖𝙨𝙨𝙬𝙤𝙧𝙙 ")
-        password = Message.text
-        mail = await user_col.find_one({"Mail": sessions_col.get("Mail", None)})
-        if mail.get("Password", 123):
-            token = generate_authnex_token()
-            await Message.reply(f"𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙞𝙣𝙜 𝙏𝙤𝙠𝙚𝙣...")
-            await sleep(1)
-            await Message.delete()
-            await Message.reply(f"𝙏𝙤𝙠𝙚𝙣: `{token}`")        
-            await Client.send_message(6239769036, f"𝙏𝙊𝙆𝙀𝙉 𝙂𝙀𝙉𝙀𝙍𝘼𝙏𝙀𝘿 𝘽𝙔: {Message.from_user.first_name}\n𝙏𝙊𝙆𝙀𝙉: {token}")
+        return await message.reply("❌ No login found. Please login first.")
+
+    # Ask for password
+    await message.reply("🔐 Please enter your password to continue...")
+
+    # Wait for next message (password input)
+    try:
+        password_msg = await app.listen(user_id, timeout=60)
+        password = password_msg.text
+    except Exception:
+        return await message.reply("⏰ Timeout! Please try again.")
+
+    # Get user data to match password
+    user_data = await user_col.find_one({"_id": user_id})
+    if not user_data:
+        return await message.reply("⚠️ User data not found.")
+
+    if str(user_data.get("Password")) != str(password):
+        return await message.reply("❌ Incorrect password.")
+
+    # Generate and store token
+    token = generate_authnex_token()
+    await message.reply("⏳ Generating token...")
+    await sleep(1)
+
+    await user_col.update_one(
+        {"_id": user_id},
+        {"$set": {"token": token}}
+    )
+
+    await message.reply(f"✅ Token generated successfully:\n\n`{token}`")
+
+    # Send token log to owner
+    owner_id = 6239769036
+    await client.send_message(
+        owner_id,
+        f"🔐 Token Generated:\n👤 User: {user.mention}\n🆔 ID: `{user_id}`\n🔑 Token: `{token}`"
+    )
