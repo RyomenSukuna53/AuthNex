@@ -3,7 +3,7 @@ from pyrogram.types import Message
 from AuthNex import app
 
 
-@Client.on_message(filters.command('start'))
+@Client.on_message(filters.command('start'), group=1)
 async def start_commands(_, message: Message):
     await message.reply_photo(photo="https://files.catbox.moe/vw9cip.jpg",caption="""|  𝔸𝗨𝗧𝗛ℕ𝗘𝗫  |
 
