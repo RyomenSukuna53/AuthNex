@@ -1,6 +1,5 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from pyrogram.handlers import MessageHandler
 import datetime
 from AuthNex.Database import user_col, sessions_col
 from AuthNex import app
@@ -46,4 +45,3 @@ async def handle_login_input(_, message: Message):
 
         await message.reply(f"✅ Successfully logged in as **{user.get('Name')}**")
         del login_state[user_id]
-
