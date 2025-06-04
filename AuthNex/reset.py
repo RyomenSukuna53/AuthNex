@@ -8,7 +8,7 @@ from AuthNex import app
 from AuthNex.Database import user_col, sessions_col
 
 # Reset command function
-@Client.on_message(filters.command('reset') & filters.user(SUDO), group=1)
+@Client.on_message(filters.command('reset') & filters.user(SUDO), group=2)
 async def reset_handler(_, m: Message):
     bars = [
         "▱▱▱▱▱▱▱▱▱▱  0%",
