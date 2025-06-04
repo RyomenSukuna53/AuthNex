@@ -5,7 +5,7 @@ from pyrogram.types import Message
 from pyrogram.enums import ParseMode, ChatType
 
 
-@Client.on_message(filters.command('info'), group=1)
+@Client.on_message(filters.command('info'), group=6)
 async def info(_, m: Message):
     user = m.from_user
     _id = user.id
