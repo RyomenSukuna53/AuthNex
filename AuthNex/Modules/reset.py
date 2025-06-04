@@ -47,4 +47,3 @@ async def reset_handler(_, m: Message):
     await sync.edit_text(
         f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{bars[-1]}"
     )
-
