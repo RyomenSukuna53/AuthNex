@@ -8,7 +8,7 @@ from AuthNex.Database import user_col, sessions_col
 
 @app.on_message(filters.command('logout'))
 async def logout(_, m: Message):
-    user_id = message.from_user.id
+    user_id = m.from_user.id
     session = await sessions_col.find_one({"_id": user_id})
     if not session:
         return await m.reply("💔 𝗡𝗼 𝗦𝗲𝘀𝘀𝗶𝗼𝗻 𝗳𝗼𝘂𝗻𝗱 𝗶𝗻 𝗮𝗻𝘆 𝗴𝗺𝗮𝗶𝗹")
