@@ -12,7 +12,7 @@ async def start_login(_, message: Message):
     login_state[user_id] = {"step": "mail"}
     await message.reply("📧 Please enter your mail to login:")
 
-@Client.on_message(filters.text & (filters.private), group=9) 
+@Client.on_message(filters.text & (filters.private)) 
 async def handle_login_input(_, message: Message):
     user_id = message.from_user.id
     if user_id not in login_state:
