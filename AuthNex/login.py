@@ -6,7 +6,7 @@ from AuthNex import app
 
 login_state = {}
 
-@Client.on_message(filters.command('login') & (filters.private))
+@Client.on_message(filters.command('login') & (filters.private), group=1)
 async def start_login(_, message: Message):
     user_id = message.from_user.id
     login_state[user_id] = {"step": "mail"}
