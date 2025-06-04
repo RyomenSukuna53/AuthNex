@@ -9,8 +9,8 @@ def generate_authnex_token(length=32):
     return secrets.token_hex(length // 2)  # length in hex digits
 
 
-@app.on_message(filters.command("generatetoken") & filters.private)
-async def token_generator(client, message: Message):
+@Client.on_message(filters.command("generatetoken") & filters.private)
+async def token_generator(Client, message: Message):
     user = message.from_user
     user_id = user.id
 
@@ -23,7 +23,9 @@ async def token_generator(client, message: Message):
     session = await sessions_col.find_one({"_id": user_id})
     if not session:
         return await message.reply("❌ No login found. Please login first.")
-
+    token = sessions_col.find_one({"token": None})
+    if token:
+        return
     # Ask for password
     await message.reply("🔐 Please enter your password to continue...")
 
@@ -56,7 +58,7 @@ async def token_generator(client, message: Message):
 
     # Send token log to owner
     owner_id = 6239769036
-    await client.send_message(
+    await Client.send_message(
         owner_id,
         f"🔐 Token Generated:\n👤 User: {user.mention}\n🆔 ID: `{user_id}`\n🔑 Token: `{token}`"
     )
