@@ -5,7 +5,7 @@ app = Client("AuthNexLogins",
                  api_id=API_ID,
                  api_hash=API_HASH,
                  bot_token=BOT_TOKEN,
-                 plugins=dict(root="AuthNex/Modules")
+                 plugins=dict(root="AuthNex")
                 )
 
 import logging
