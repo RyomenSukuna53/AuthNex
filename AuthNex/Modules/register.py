@@ -114,6 +114,3 @@ async def handle_register_step(_, message: Message):
                                       "login": datetime.datetime.utcnow()
                                      })
         del user_states[user_id]
-        
-
-
