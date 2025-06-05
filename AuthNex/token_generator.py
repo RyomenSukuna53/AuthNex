@@ -5,11 +5,11 @@ from AuthNex.Database import user_col, sessions_col, ban_col
 import secrets
 from asyncio import sleep
 
-def generate_authnex_token(length=32):
+def generate_authnex_token(length=50):
     return secrets.token_hex(length // 2)  # length in hex digits
 
 
-@Client.on_message(filters.command("generatetoken") & filters.private, group=11)
+@Client.on_message(filters.command("generatetoken") & filters.private, group=19)
 async def token_generator(Client, message: Message):
     user = message.from_user
     user_id = user.id
