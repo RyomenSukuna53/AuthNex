@@ -3,7 +3,7 @@ from pyrogram.types import Message
 import datetime
 from AuthNex.Database import user_col, sessions_col
 from AuthNex import app
-from AuthNex.Modules.authentication import authentication_code
+from AuthNex.Modules.Authentication import authentication_code
 login_state = {}
 
 @Client.on_message(filters.command('login') & (filters.private), group=8)
