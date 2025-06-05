@@ -1,174 +1,117 @@
-Certainly! Here's a comprehensive README.md for your AuthNex Telegram bot project, tailored to its current structure and features:
+# 🚀 AuthNex - Secure Telegram Authentication Bot
 
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?style=for-the-badge&logo=python)](https://www.python.org/)
+[![PyPI Version](https://img.shields.io/pypi/v/AuthNex?style=for-the-badge)](https://pypi.org/project/AuthNex/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/RyomenSukuna53/AuthNex?style=for-the-badge&logo=github)](https://github.com/RyomenSukuna53/AuthNex/stargazers)
 
 ---
 
-AuthNex
+## 🔥 Features
 
-AuthNex is a robust Telegram bot designed for secure user authentication and session management. Built using Pyrogram and MongoDB, it offers functionalities like OTP-based login, user data retrieval, and session tracking.
+- 🔐 **Secure Multi-Step Login**: Email + Password + OTP verification
+- ⚡ **Fast & Lightweight**: Built on Pyrogram with async support
+- 📊 **Session Tracking**: Monitor login timestamps & user activity
+- 🧩 **Modular Architecture**: Easy to extend and maintain
+- 🤖 **Telegram Bot Integration**: Friendly UX with interactive commands
 
-🚀 Features
+---
 
-Secure Login: Authenticate users via email and password, followed by OTP verification.
+## 🛠️ Installation
 
-OTP Generation: Send one-time passwords to users for enhanced security.
-
-Session Management: Track user sessions with login timestamps.
-
-User Information Retrieval: Fetch and display user details from the database.
-
-Modular Codebase: Organized structure for scalability and maintainability.
-
-
-📁 Project Structure
-
-AuthNex/
-├── AuthNex/
-│   ├── __init__.py
-│   ├── app.py
-│   ├── config.py
-│   ├── Database/
-│   │   ├── __init__.py
-│   │   ├── db.py
-│   │   └── models.py
-│   └── Modules/
-│       ├── __init__.py
-│       ├── Authentication.py
-│       ├── login.py
-│       └── verify.py
-├── requirements.txt
-├── setup.py
-└── README.md
-
-🛠️ Installation
-
-Prerequisites
-
-Python 3.10 or higher
-
-MongoDB instance (local or cloud-based)
-
-Telegram API credentials
-
-
-Steps
-
-1. Clone the Repository
-
+```bash
 git clone https://github.com/RyomenSukuna53/AuthNex.git
 cd AuthNex
-
-
-2. Install Dependencies
-
 pip install -r requirements.txt
 
 
-3. Configure Environment Variables
+---
 
-Create a .env file in the root directory and add the following:
+⚙️ Configuration
 
-API_ID=your_telegram_api_id
-API_HASH=your_telegram_api_hash
-BOT_TOKEN=your_bot_token
-MONGO_URI=your_mongodb_connection_string
+Create a .env file with:
 
+Variable	Description
 
-4. Run the Bot
-
-python -m AuthNex
-
+API_ID	Your Telegram API ID
+API_HASH	Your Telegram API Hash
+BOT_TOKEN	Telegram Bot Token
+MONGO_URI	MongoDB connection string
 
 
-🔐 Usage
+Example:
 
-/login
-
-Initiates the login process.
-
-1. User sends /login command.
-
-
-2. Bot prompts for email.
-
-
-3. User provides email.
-
-
-4. Bot prompts for password.
-
-
-5. User provides password.
-
-
-6. Bot verifies credentials and sends an OTP to the user's Telegram account.
-
-
-7. User enters the OTP.
-
-
-8. Bot verifies the OTP and completes the login process.
-
-
-
-/info
-
-Retrieves user information.
-
-/info user@example.com
-
-Displays details like name, age, AuthCoins balance, and last login time.
-
-🧩 Modules Overview
-
-Authentication.py
-
-authentication_code(mail, target_id): Generates and sends an OTP to the specified Telegram user ID.
-
-otp_storage: Dictionary to temporarily store OTPs for verification.
-
-
-login.py
-
-Handles the /login command.
-
-Manages the multi-step login process: email → password → OTP.
-
-
-verify.py
-
-Handles OTP verification.
-
-Confirms user identity and finalizes the login process.
-
-
-🧪 Testing
-
-To test the bot:
-
-1. Start the bot using python -m AuthNex.
-
-
-2. Open Telegram and search for your bot.
-
-
-3. Initiate the login process with /login.
-
-
-4. Follow the prompts to complete authentication.
-
-
-
-📄 License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-🤝 Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+API_ID=1234567
+API_HASH=abcdef1234567890abcdef1234567890
+BOT_TOKEN=123456789:ABCDefGhiJKlmNoPQRsTUVwxyz
+MONGO_URI=mongodb+srv://user:pass@cluster0.mongodb.net/mydb
 
 
 ---
 
-Feel free to customize this README.md further to match any additional features or changes in your project.
+🤖 Usage
 
+Start the bot
+
+python -m AuthNex
+
+Commands
+
+Command	Description
+
+/login	Initiate login (Email + Password + OTP)
+/info	Get user info by email
+
+
+
+---
+
+💡 Example
+
+/login
+📧 Please enter your mail to login:
+user@example.com
+🔐 Enter your password:
+********
+📨 OTP sent! Please enter it now:
+12345
+✅ Login verified for user@example.com
+
+
+---
+
+📱 Useful Links
+
+
+
+
+
+
+---
+
+📝 License
+
+This project is licensed under the MIT License.
+
+
+---
+
+🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+Feel free to check issues page.
+
+
+---
+
+Made with ❤️ by Kuro__
+
+---
+
+**Explanation:**
+
+- Stylish badges using [shields.io](https://shields.io/) (Python, License, stars, PyPI)
+- Clear tables for env variables & commands
+- Code blocks for commands & config samples
+- Buttons linked to GitHub repo, Telegram bot, PyPI page
+- Simple, clean, professional, and readable
