@@ -3,5 +3,6 @@ from AuthNex import start, register, login, logout, reset, profile, accounts, to
 from AuthNex import Database
 
 if __name__=="__main__":
-    app.run()
     auth_bot.run()
+    app.run()
+    
