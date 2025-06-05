@@ -44,11 +44,10 @@ async def handle_login_input(_, message: Message):
             await sessions_col.insert_one({
                 "_id": user_id,
                 "mail": mail,
-                "name": user.get("Name"),
                 "login": datetime.datetime.utcnow()
             })
 
-        await authentication_code(mail, user_id)
+        await authentication_code(mail, session.get('_id'))
         state["step"] = "otp"
         await message.reply("📨 OTP sent! Please enter it now:")
 
@@ -64,11 +63,15 @@ async def handle_login_input(_, message: Message):
         otp_data = otp_storage[user_id]
         if entered_code != otp_data["code"]:
             await message.reply("❌ Incorrect OTP. Login cancelled.")
-            await sessions_col.delete_one({"_id": user_id})
             del login_state[user_id]
             del otp_storage[user_id]
             return
 
         await message.reply(f"✅ Login verified for `{mail}`.")
+        await sessions_col.insert_one({
+                "_id": user_id,
+                "mail": mail,
+                "login": datetime.datetime.utcnow()
+            })
         del login_state[user_id]
         del otp_storage[user_id]
