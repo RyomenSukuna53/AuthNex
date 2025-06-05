@@ -11,9 +11,10 @@ async def start_login(_, message: Message):
     user_id = message.from_user.id
     session = await sessions_col.find_one({"_id": user_id})
     if session:
-        return await message.reply(f"❌ You already logged in as {session.get('mail')}\nLogout first.")
+        return await message.reply(f"❌ You're already logged in as `{session.get('mail')}`.\nUse `/logout` first.")
+    
     login_state[user_id] = {"step": "mail"}
-    await message.reply("📧 Please enter your mail to login:")
+    await message.reply("📧 Please enter your **mail** to login:")
 
 @Client.on_message(filters.text & filters.private)
 async def handle_login_input(_, message: Message):
@@ -24,11 +25,13 @@ async def handle_login_input(_, message: Message):
     state = login_state[user_id]
     text = message.text.strip()
 
+    # Step 1: Mail
     if state["step"] == "mail":
         state["mail"] = text
         state["step"] = "password"
-        await message.reply("🔐 Enter your password:")
+        await message.reply("🔐 Enter your **password**:")
 
+    # Step 2: Password
     elif state["step"] == "password":
         mail = state["mail"]
         password = text
@@ -39,39 +42,28 @@ async def handle_login_input(_, message: Message):
             del login_state[user_id]
             return
 
-        session = await sessions_col.find_one({"mail": mail})
-        if not session:
-            await sessions_col.insert_one({
-                "_id": user_id,
-                "mail": mail,
-                "login": datetime.datetime.utcnow()
-            })
-
-        await authentication_code(mail, session.get('_id'))
+        # Send OTP
+        code = await authentication_code(mail, user_id)  # <-- Sends code to user via bot
+        state["otp"] = code
         state["step"] = "otp"
-        await message.reply("📨 OTP sent! Please enter it now:")
+        await message.reply("✅ Mail & password verified.\n\n📨 Enter the **OTP** sent to your Telegram account.")
 
+    # Step 3: OTP
     elif state["step"] == "otp":
         entered_code = text
-        mail = state["mail"]
+        expected_code = state.get("otp")
 
-        if user_id not in otp_storage:
-            await message.reply("❌ No OTP session found.")
+        if entered_code != expected_code:
+            await message.reply("❌ Incorrect OTP. Login failed.")
             del login_state[user_id]
             return
 
-        otp_data = otp_storage[user_id]
-        if entered_code != otp_data["code"]:
-            await message.reply("❌ Incorrect OTP. Login cancelled.")
-            del login_state[user_id]
-            del otp_storage[user_id]
-            return
-
-        await message.reply(f"✅ Login verified for `{mail}`.")
+        # Save session
         await sessions_col.insert_one({
-                "_id": user_id,
-                "mail": mail,
-                "login": datetime.datetime.utcnow()
-            })
+            "_id": user_id,
+            "mail": state["mail"],
+            "login_time": datetime.datetime.utcnow()
+        })
+
+        await message.reply("✅ Login successful. Welcome!")
         del login_state[user_id]
-        del otp_storage[user_id]
