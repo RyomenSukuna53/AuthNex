@@ -121,7 +121,6 @@ async def handle_login_decision(_, query: CallbackQuery):
         login_state.pop(new_id, None)
 
     elif action == "terminate_login":
-        await sessions_col.delete_one({"mail": mail})
         await sessions_col.insert_one({
             "_id": new_id,
             "mail": mail,
