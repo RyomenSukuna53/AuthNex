@@ -1,43 +1,70 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from AuthNex.__init__ import app
-from AuthNex.Database import user_col, sessions_col, ban_col, tokens_col
+from AuthNex.Database import user_col, sessions_col, tokens_col
+from pyrogram.enums import ChatType
 import secrets
-from asyncio import sleep
-from pyrogram.enums import ChatType, ParseMode
 import asyncio
 
 async def generate_authnex_token(length=50):
-    return secrets.token_hex(length // 2)  # length in hex digits
+    return secrets.token_hex(length // 2)  # generates a secure token
 
+# Start command handler
+@app.on_message(filters.command("generatetoken") & filters.private)
+async def token_generator(_, message: Message):
+    user_id = message.from_user.id
 
-@Client.on_message(filters.command("generatetoken") & filters.private, group=13)
-async def token_generator(Client, message: Message):
-    user = message.from_user
-    user_id = user.id
+    # Ensure the command is used only in private chat
+    if message.chat.type != ChatType.PRIVATE:
+        return await message.reply("❌ Use this command in **private chat only.**")
 
-    if message.chat.type == ChatType.GROUP:
-        return await message.reply("USE IN DM")
     session = await sessions_col.find_one({"_id": user_id})
-    mail = await session.get('mail')
-    user = await user_col.find_one({"Mail": mail})
     if not session:
-        return
-    token = await tokens_col.find_one({"_id": user_id})
-    if token:
-        return
+        return await message.reply("❌ You must be logged in to generate a token.")
+
+    mail = session.get("mail")
+    user = await user_col.find_one({"Mail": mail})
+    if not user:
+        return await message.reply("⚠️ User record not found.")
+
+    # Check if token already exists
+    existing_token = await tokens_col.find_one({"id": user_id})
+    if existing_token:
+        return await message.reply("✅ You already have a token.\nUse `/revoketoken` to regenerate.")
+
+    # Ask for password
+    await message.reply("🔐 Please send your **password** to confirm token generation.")
+    
+    # Wait for user's next message as password
+    def check(_, m: Message):
+        return m.from_user.id == user_id and m.chat.id == message.chat.id
+
+    try:
+        response = await app.listen(message.chat.id, filters=filters.text & filters.private, timeout=60)
+    except asyncio.TimeoutError:
+        return await message.reply("⏱️ Timeout! Please try again.")
+
+    if response.text != user.get("Password"):
+        return await response.reply("❌ Incorrect password. Try again later.")
+
+    # Generate unique token
     while True:
         token = await generate_authnex_token()
-        if tokens_col.find_one({"token": token}):
+        exists = await tokens_col.find_one({"token": token})
+        if not exists:
             break
-    await message.reply("•--> 𝗘𝗻𝘁𝗲𝗿 𝘆𝗼𝘂𝗿 𝗽𝗮𝘀𝘀𝘄𝗼𝗿𝗱 𝘁𝗼 𝗰𝗼𝗻𝗳𝗶𝗿𝗺")
-    password = message.text
-    if password != await user.get('Password'):
-        return await message.reply("Wrong pass try again after some time.")
-    await message.reply("🔑 𝐆𝐞𝐧𝐞𝐫𝐚𝐭𝐢𝐧𝐠 𝐓𝐨𝐤𝐞𝐧...")
+
+    # Save token
+    await tokens_col.insert_one({
+        "id": user_id,
+        "mail": mail,
+        "token": token
+    })
+
+    await message.reply("🔄 Generating your secure token...")
     await asyncio.sleep(1)
-    await message.delete()
-    await message.reply(f"𝗬𝗼𝘂𝗿 𝗧𝗢𝗞𝗘𝗡: `{token}`\nUse this to use 𝔸𝗨𝗧𝗛ℕ𝗘𝕏 codes and library.")
-    await tokens_col.insert_one({"id": user_id,
-                                 "token": token
-                                })
+
+    await message.reply(
+        f"✅ 𝗬𝗼𝘂𝗿 𝗔𝘂𝘁𝗵𝗡𝗲𝘅 𝗧𝗼𝗸𝗲𝗻:\n\n`{token}`\n\nUse this to authenticate with **AuthNex Library** and bots securely.",
+        quote=True
+    )
