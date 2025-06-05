@@ -3,7 +3,7 @@ from pyrogram.types import Message
 import datetime
 from AuthNex.Database import user_col, sessions_col
 from AuthNex import app
-
+from AuthNex.Modules.authentication import authentication_code
 login_state = {}
 
 @Client.on_message(filters.command('login') & (filters.private), group=8)
@@ -35,6 +35,8 @@ async def handle_login_input(_, message: Message):
             await message.reply("❌ Invalid mail or password. Try again.")
             del login_state[user_id]
             return
+
+        authentication_code(mail)
 
         # Save session
         await sessions_col.insert_one({
