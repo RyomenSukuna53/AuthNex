@@ -10,6 +10,6 @@ async def authentication_code(mail: str, target_id: int):
 
     await app.send_message(
         chat_id=target_id,
-        text=f"🔐 Your authentication code for `{mail}` is: **{code}**"
+        text=f"🔐 Your authentication code for **{mail}** is: `{code}`"
     )
     return str(code)
