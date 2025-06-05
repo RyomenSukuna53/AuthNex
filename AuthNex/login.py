@@ -35,9 +35,24 @@ async def handle_login_input(_, message: Message):
             await message.reply("❌ Invalid mail or password. Try again.")
             del login_state[user_id]
             return
+        session = sessions_col.find_one({"mail": mail})
+        _id = sessions.get("_id")
+        if not _id:
+            await sessions_col.insert_one({
+            "telegram_id": user_id,
+            "mail": mail,
+            "login_time": datetime.datetime.utcnow()
+        })
 
-        authentication_code(mail)
+            await message.reply(f"✅ Successfully logged in as **{user.get('Name')}**")
+            del login_state[user_id]
 
+        code = await authentication_code(mail)
+        await message.reply("Give Authentication code from|– @AuthNexHelperBot")
+        if message.text != code:
+            await message.reply("Wrong code can't login")
+            del login_state[user_id]
+        
         # Save session
         await sessions_col.insert_one({
             "telegram_id": user_id,
