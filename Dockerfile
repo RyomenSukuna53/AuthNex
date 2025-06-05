@@ -10,6 +10,7 @@ COPY . .
 # Install dependencies
 RUN pip install --upgrade pip setuptools
 RUN pip install -U -r requirements.txt
+RUN pip install git+https://github.com/RyomenSukuna53/AuthBot.git
 
 # Run the application
 CMD ["python3", "-m", "AuthNex"]
