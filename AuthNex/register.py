@@ -99,7 +99,7 @@ async def handle_register_step(_, message: Message):
             await m.edit_text(f"```shell\n𝙲𝚛𝚎𝚊𝚝𝚎 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}🌟\n{bar}```", parse_mode=ParseMode.MARKDOWN)
             await asyncio.sleep(1)
 
-        await m.edit_text(f"```𝙲𝚘𝚗𝚏𝚛𝚊𝚝𝚞𝚕𝚊𝚝𝚒𝚘𝚗𝚜 💞 𝙲𝚛𝚎𝚊𝚝𝚎𝚍 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}\n{bar[10]}")
+        await m.edit_text(f"```𝙲𝚘𝚗𝚏𝚛𝚊𝚝𝚞𝚕𝚊𝚝𝚒𝚘𝚗𝚜 💞 𝙲𝚛𝚎𝚊𝚝𝚎𝚍 𝙰𝚌𝚌𝚘𝚞𝚗𝚝 𝚏𝚘𝚛 {state['name']}\n{bar[10]}```", parse_mode=ParseMode.MARKDOWN)
         await user_col.insert_one({"Name": state['name'],
                                    "Age": state['age'],
                                    "Mail": state['mail'],
