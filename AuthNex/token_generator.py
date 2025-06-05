@@ -17,11 +17,6 @@ async def token_generator(Client, message: Message):
 
     if message.chat.type == ChatType.GROUP:
         return
-    # Check if user is banned
-    banned = await ban_col.find_one({"_id": user_id})
-    if banned:
-        return await message.reply("🚫 You are banned from using AuthNex.")
-
     # Check session
     session = await sessions_col.find_one({"_id": user_id})
     if not session:
