@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 import datetime
 from AuthNex.Database import user_col, sessions_col
-from AuthNex.Modules.Authentication import authentication_code, otp_storage
+from AuthNex.Modules.auth import authentication_code, otp_storage
 
 login_state = {}
 
