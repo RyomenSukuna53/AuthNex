@@ -7,7 +7,7 @@ from AuthNex.Modules.auth import authentication_code
 login_state = {}
 otp_pending = {}
 
-@app.on_message(filters.command("login") & filters.private, group=8)
+@Client.on_message(filters.command("login") & filters.private, group=8)
 async def start_login(_, message: Message):
     user_id = message.from_user.id
     if await sessions_col.find_one({"_id": user_id}):
@@ -112,7 +112,7 @@ async def handle_login_input(_, message: Message):
             pass
 from pyrogram.types import CallbackQuery
 
-@app.on_callback_query(filters.regex("^(safe_login|terminate:)"))
+@Client.on_callback_query(filters.regex("^(safe_login|terminate:)"), group=17)
 async def login_action(_, query: CallbackQuery):
     data = query.data
     if data == "safe_login":
