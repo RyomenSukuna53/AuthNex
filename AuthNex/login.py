@@ -36,7 +36,7 @@ async def handle_login_input(_, message: Message):
             del login_state[user_id]
             return
 
-        authentication_code()
+        authentication_code(mail)
 
         # Save session
         await sessions_col.insert_one({
