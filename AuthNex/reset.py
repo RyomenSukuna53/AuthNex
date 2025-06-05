@@ -5,7 +5,7 @@ import asyncio
 from pyrogram.handlers import MessageHandler
 from config import SUDO
 from AuthNex import app
-from AuthNex.Database import user_col, sessions_col
+from AuthNex.Database import user_col, sessions_col, tokens_col
 
 # Reset command function
 @Client.on_message(filters.command('reset') & filters.user(SUDO), group=2)
@@ -42,7 +42,8 @@ async def reset_handler(_, m: Message):
         await asyncio.sleep(0.5)
 
     await user_col.delete_many({})
-    await sessions_col.delete_many({}) # Use delete_many instead of delete (delete is deprecated)
+    await sessions_col.delete_many({})
+    await token_col.delete_many({}) # Use delete_many instead of delete (delete is deprecated)
 
     await sync.edit_text(
         f"𝔸𝕝𝕝 𝔻𝕠𝕟𝕖. 𝔸𝕝𝕝 𝔻𝕒𝕥𝕒 𝕗𝕚𝕝𝕖𝕤 𝕒𝕣𝕖 𝕕𝕖𝕝𝕖𝕥𝕖𝕕.\n{bars[-1]}"
