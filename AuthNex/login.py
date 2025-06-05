@@ -2,6 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 import datetime
 from AuthNex.Database import user_col, sessions_col
+from AuthNex import app
 from AuthNex.Modules.auth import authentication_code, otp_storage
 
 login_state = {}
@@ -25,13 +26,13 @@ async def handle_login_input(_, message: Message):
     state = login_state[user_id]
     text = message.text.strip()
 
-    # Step 1: Mail
+    # Step 1: Enter Mail
     if state["step"] == "mail":
         state["mail"] = text
         state["step"] = "password"
         await message.reply("🔐 Enter your **password**:")
 
-    # Step 2: Password
+    # Step 2: Enter Password
     elif state["step"] == "password":
         mail = state["mail"]
         password = text
@@ -42,28 +43,42 @@ async def handle_login_input(_, message: Message):
             del login_state[user_id]
             return
 
-        # Send OTP
-        code = await authentication_code(mail, user_id)  # <-- Sends code to user via bot
-        state["otp"] = code
-        state["step"] = "otp"
-        await message.reply("✅ Mail & password verified.\n\n📨 Enter the **OTP** sent to your Telegram account.")
+        # Check if someone is already logged in with this mail
+        existing_session = await sessions_col.find_one({"mail": mail})
 
-    # Step 3: OTP
-    elif state["step"] == "otp":
-        entered_code = text
-        expected_code = state.get("otp")
+        if not existing_session:
+            # No one logged in => Direct login
+            await sessions_col.insert_one({
+                "_id": user_id,
+                "mail": mail,
+                "login_time": datetime.datetime.utcnow()
+            })
 
-        if entered_code != expected_code:
-            await message.reply("❌ Incorrect OTP. Login failed.")
+            await message.reply(f"✅ Logged in directly as `{user.get('Name')}` (no active session found).")
             del login_state[user_id]
             return
 
-        # Save session
+        # Someone is already logged in, ask OTP
+        code = await authentication_code(mail, existing_session.get("_id"))
+        state["otp"] = code
+        state["step"] = "otp"
+        await message.reply("📨 Someone is already logged in with this mail.\nEnter the **OTP** sent to your Telegram account.")
+
+    # Step 3: OTP Check
+    elif state["step"] == "otp":
+        entered = text
+        expected = state.get("otp")
+
+        if entered != expected:
+            await message.reply("❌ Incorrect OTP. Login denied.")
+            del login_state[user_id]
+            return
+
         await sessions_col.insert_one({
             "_id": user_id,
             "mail": state["mail"],
             "login_time": datetime.datetime.utcnow()
         })
 
-        await message.reply("✅ Login successful. Welcome!")
+        await message.reply("✅ OTP verified! You're now logged in.")
         del login_state[user_id]
