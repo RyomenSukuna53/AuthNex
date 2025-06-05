@@ -11,7 +11,9 @@ app = Client("AuthNexLogins",
 auth_bot = Client("Helper",
                   api_id=21218274,
                   api_hash="3474a18b61897c672d315fb330edb213",
-                  bot_token="7883663341:AAEXp8lzLUlY5JVmF770v8bnmp8lsklXhgQ")
+                  bot_token="7883663341:AAEXp8lzLUlY5JVmF770v8bnmp8lsklXhgQ",
+                  plugins=dict(root="AuthNex")
+                 )
 import logging
 
 logging.basicConfig(
