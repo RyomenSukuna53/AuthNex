@@ -9,8 +9,9 @@ login_state = {}
 @Client.on_message(filters.command('login') & filters.private, group=8)
 async def start_login(_, message: Message):
     user_id = message.from_user.id
-    if await sessions_col.find_one({"_id": user_id}):
-        return await message.reply(f"❌ You already logged in as {sessions_col.get('mail')}\nLogout first.")
+    session = await sessions_col.find_one({"_id": user_id})
+    if session:
+        return await message.reply(f"❌ You already logged in as {session.get('mail')}\nLogout first.")
     login_state[user_id] = {"step": "mail"}
     await message.reply("📧 Please enter your mail to login:")
 
