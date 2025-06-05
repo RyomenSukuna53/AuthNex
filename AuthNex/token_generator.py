@@ -23,7 +23,7 @@ async def token_generator(Client, message: Message):
     session = await sessions_col.find_one({"_id": user_id})
     if not session:
         return await message.reply("❌ No login found. Please login first.")
-    token = sessions_col.find_one({"token": None})
+    token = sessions_col.find_one({"token": 12345})
     if token:
         return
     # Ask for password
