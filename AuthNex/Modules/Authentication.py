@@ -1,6 +1,6 @@
 from pyrogram import Client
 import random
-from bot import auth_bot
+from AuthNex import auth_bot
 
 otp_storage = {}
 
