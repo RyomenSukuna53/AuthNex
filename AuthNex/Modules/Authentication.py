@@ -1,6 +1,6 @@
 from pyrogram import Client
 import random
-from AuthNex.Modules import HelperBot
+from AuthNex import HelperBot
 
 otp_storage = {}
 
