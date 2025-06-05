@@ -19,8 +19,8 @@ async def token_generator(Client, message: Message):
     if message.chat.type == ChatType.GROUP:
         return await message.reply("USE IN DM")
     session = await sessions_col.find_one({"_id": user_id})
-    mail = session.get('mail')
-    user = user_col.find_one({"Mail": mail})
+    mail = await session.get('mail')
+    user = await user_col.find_one({"Mail": mail})
     if not session:
         return
     token = await tokens_col.find_one({"_id": user_id})
@@ -32,7 +32,7 @@ async def token_generator(Client, message: Message):
             break
     await message.reply("•--> 𝗘𝗻𝘁𝗲𝗿 𝘆𝗼𝘂𝗿 𝗽𝗮𝘀𝘀𝘄𝗼𝗿𝗱 𝘁𝗼 𝗰𝗼𝗻𝗳𝗶𝗿𝗺")
     password = message.text
-    if password != user.get('Password'):
+    if password != await user.get('Password'):
         return await message.reply("Wrong pass try again after some time.")
     await message.reply("🔑 𝐆𝐞𝐧𝐞𝐫𝐚𝐭𝐢𝐧𝐠 𝐓𝐨𝐤𝐞𝐧...")
     await asyncio.sleep(1)
