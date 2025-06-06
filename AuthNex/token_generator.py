@@ -7,11 +7,13 @@ import asyncio
 from AuthNex import app
 from AuthNex.Database import user_col, sessions_col, tokens_col
 
+pending_token_users = {}
+
 async def generate_authnex_token(length=50):
-    return secrets.token_hex(length // 2)  # generates a secure token
+    return secrets.token_hex(length // 2)
 
 @app.on_message(filters.command("generatetoken") & filters.private, group=14)
-async def token_generator(_, message: Message):
+async def token_command_handler(_, message: Message):
     user_id = message.from_user.id
 
     if message.chat.type != ChatType.PRIVATE:
@@ -30,31 +32,42 @@ async def token_generator(_, message: Message):
     if existing_token:
         return await message.reply("✅ You already have a token.\nUse `/revoketoken` to regenerate.")
 
-    await message.reply("🔐 Please send your **password** to confirm token generation.")
+    pending_token_users[user_id] = {
+        "mail": mail,
+        "password": user["Password"]
+    }
+    await message.reply("🔐 Send your **password** to confirm token generation.\n\n⚠️ Type `cancel` to abort.")
 
-    try:
-        # Listen for user's reply (password)
-        response = await app.listen(message.chat.id, filters=filters.text & filters.private, timeout=60)
-    except asyncio.TimeoutError:
-        return await message.reply("⏱️ Timeout! Please try again.")
+@Client.on_message(filters.private & filters.text, group=16)
+async def password_listener(_, message: Message):
+    user_id = message.from_user.id
+    if user_id not in pending_token_users:
+        return
 
-    if response.text != user.get("Password"):
-        return await response.reply("❌ Incorrect password. Try again later.")
+    input_text = message.text.strip()
+    if input_text.lower() == "cancel":
+        del pending_token_users[user_id]
+        return await message.reply("❌ Token generation cancelled.")
+
+    expected_pass = pending_token_users[user_id]["password"]
+    mail = pending_token_users[user_id]["mail"]
+
+    if input_text != expected_pass:
+        del pending_token_users[user_id]
+        return await message.reply("❌ Incorrect password. Try again.")
 
     # Generate unique token
     while True:
         token = await generate_authnex_token()
-        exists = await tokens_col.find_one({"token": token})
-        if not exists:
+        if not await tokens_col.find_one({"token": token}):
             break
-
-    await response.reply("🔑 Generating your token...")
-    await asyncio.sleep(1)
-
-    await response.reply(f"✅ **Your AuthNex Token:**\n\n`{token}`\n\nUse this in any AuthNex-integrated bot/library.")
 
     await tokens_col.insert_one({
         "_id": user_id,
         "mail": mail,
         "token": token
     })
+
+    del pending_token_users[user_id]
+
+    await message.reply(f"✅ **Your AuthNex Token:**\n\n`{token}`\nUse this to authenticate with **AuthNex-based bots/libraries.**")
