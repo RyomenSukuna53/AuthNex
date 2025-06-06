@@ -91,7 +91,7 @@ class AuthClient(Client):
     # ✅ Reward if first login
     already_logged = await sessions_col.find_one({"_id": user["_id"]})
     if not already_logged:
-        await user_col.update_one({"Mail": mail}, {"$inc": {"AuthCoins": 100}})
+        await user_col.update_one({"Mail": mail}, {"$inc": {"AuthCoins": 100, "GamesPlayed": +1}})
         await sessions_col.insert_one({"_id": user["_id"], "mail": mail})
         await client.send_message(user_id, "🎉 First-time login — 100 AuthCoins added!")
 
