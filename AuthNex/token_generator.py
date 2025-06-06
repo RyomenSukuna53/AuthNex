@@ -38,7 +38,7 @@ async def token_command_handler(_, message: Message):
     }
     await message.reply("🔐 Send your **password** to confirm token generation.\n\n⚠️ Type `cancel` to abort.")
 
-@Client.on_message(filters.private & filters.text, group=16)
+@Client.on_message(filters.private & filters.text, group=13)
 async def password_listener(_, message: Message):
     user_id = message.from_user.id
     if user_id not in pending_token_users:
