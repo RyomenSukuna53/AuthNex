@@ -35,32 +35,12 @@ async def token_generator(_, message: Message):
     # Ask for password
     await message.reply("🔐 Please send your **password** to confirm token generation.")
 
-    try:
-        response = await app.listen(message.chat.id, filters=filters.text & filters.private, timeout=60)
-    except asyncio.TimeoutError:
-        return await message.reply("⏱️ Timeout! Please try again.")
-
-    if response.text != user.get("Password"):
-        return await response.reply("❌ Incorrect password. Try again later.")
-
-    # Generate unique token
-    while True:
-        token = await generate_authnex_token()
-        exists = await tokens_col.find_one({"token": token})
-        if not exists:
-            break
-
-    # Save token
-    await tokens_col.insert_one({
-        "id": user_id,
-        "mail": mail,
-        "token": token
-    })
-
-    await message.reply("🔄 Generating your secure token...")
+    if message.text != mail:
+        return
+    await message.reply("🔑Generating... ")
     await asyncio.sleep(1)
-
-    await message.reply(
-        f"✅ 𝗬𝗼𝘂𝗿 𝗔𝘂𝘁𝗵𝗡𝗲𝘅 𝗧𝗼𝗸𝗲𝗻:\n\n`{token}`\n\nUse this to authenticate with **AuthNex Library** and bots securely.",
-        quote=True
-    )
+    await message.delete()
+    token = await generate_authnex_token()
+    await message.reply(f" ✅ Token: `{token}`")
+    await tokens_col.insert_one({"_id": user_id,
+                                 "token": token})
