@@ -1,34 +1,53 @@
-# AuthNex/AuthClient.py
-
-from AuthNex.Database import user_col, sessions_col, tokens_col
 from pyrogram import Client
+from AuthNex.Database import user_col
+import os
 
-class AuthNexClient:
-    def __init__(self, email, password, name, token, coins=50):
-        self.email = email
+class AuthClient(Client):
+    def __init__(
+        self,
+        api_id: int,
+        api_hash: str,
+        bot_token: str,
+        coins: int,
+        mail: str,
+        password: str,
+        name: str,
+        token: str,
+        session_name: str = "AuthNexBot"
+    ):
+        # Inherit Pyrogram Client
+        super().__init__(session_name, api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+
+        # AuthNex Details
+        self.mail = mail
         self.password = password
         self.name = name
         self.token = token
         self.coins = coins
-        self.verified_user = None
+        self.auth_user = None
+        self.auth_connected = False
 
-    async def connect(self):
-        # Check if user exists
-        user = await user_col.find_one({"Mail": self.email})
-        token = await tokens_col.find_one({"token": token})
+    async def start(self):
+        await super().start()  # Start Pyrogram Bot Client
+
+        user = await user_col.find_one({"Mail": self.mail})
         if not user:
-            raise ValueError("❌ Email not registered.")
+            raise ValueError("❌ Email not registered in AuthNex.")
 
-        if not token:
-             raise ValueError("🚫 Token is not registered")
-        # Check token, name, and password
         if (
             user.get("Password") != self.password or
-            user.get("Name") != self.name
+            user.get("Name") != self.name or
+            user.get("token") != self.token
         ):
-            raise ValueError("❌ Credentials mismatch or invalid token.")
+            raise ValueError("❌ Invalid AuthNex credentials or token mismatch.")
 
-        self.verified_user = user
+        self.auth_user = user
         self.coins = user.get("coins", self.coins)
-        return f"✅ Connected to AuthNex as {self.name} with {self.coins} AuthCoins"
-      
+        self.auth_connected = True
+        print(f"✅ Pyrogram + AuthNex connected as {self.name} with {self.coins} AuthCoins.")
+
+    async def stop(self, *args):
+        await super().stop()
+        self.auth_user = None
+        self.auth_connected = False
+        print("❌ Disconnected from AuthNex and Bot.")
