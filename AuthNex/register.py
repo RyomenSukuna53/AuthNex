@@ -105,8 +105,8 @@ async def handle_register_step(_, message: Message):
                                    "Mail": state['mail'],
                                    "Password": state['password'],
                                    "UserName": state['username'],
-                                   "AuthCoins": 0,
-                                   "Msgs": 0,
+                                   "AuthCoins": 1000,
+                                   "GamesPlayed": 0,
                                    "Owner": message.from_user.first_name
                                   })
         await sessions_col.insert_one({"_id": user_id,
