@@ -1,10 +1,10 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from AuthNex.__init__ import app
-from AuthNex.Database import user_col, sessions_col, tokens_col
 from pyrogram.enums import ChatType
 import secrets
 import asyncio
+from AuthNex import app
+from AuthNex.Database import user_col, sessions_col, tokens_col
 
 async def generate_authnex_token(length=50):
     return secrets.token_hex(length // 2)  # generates a secure token
