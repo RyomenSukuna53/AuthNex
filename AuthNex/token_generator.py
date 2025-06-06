@@ -10,7 +10,7 @@ from AuthNex.Database import user_col, sessions_col, tokens_col
 async def generate_authnex_token(length=50):
     return secrets.token_hex(length // 2)  # generates a secure token
 
-@app.on_message(filters.command("generatetoken") & filters.private, group=14)
+@Client.on_message(filters.command("generatetoken") & filters.private, group=14)
 async def token_generator(_, message: Message):
     user_id = message.from_user.id
 
