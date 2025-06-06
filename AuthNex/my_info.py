@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 import requests
 from io import BytesIO
 
-@Client.on_message(filters.command("myinfo") & filters.private, group=11)
+@Client.on_message(filters.command("myinfo") & filters.private, group=13)
 async def my_info(client, message: Message):
     user = message.from_user
     user_id = user.id
