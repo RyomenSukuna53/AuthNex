@@ -10,7 +10,7 @@ async def generate_authnex_token(length=50):
     return secrets.token_hex(length // 2)  # generates a secure token
 
 # Start command handler
-@app.on_message(filters.command("generatetoken") & filters.private, group=16)
+@Client.on_message(filters.command("generatetoken") & filters.private, group=14)
 async def token_generator(_, message: Message):
     user_id = message.from_user.id
 
@@ -40,7 +40,7 @@ async def token_generator(_, message: Message):
         return m.from_user.id == user_id and m.chat.id == message.chat.id
 
     try:
-        response = await app.listen(message.chat.id, filters=filters.text & filters.private, timeout=60)
+        response = await Client.listen(message.chat.id, filters=filters.text & filters.private, timeout=60)
     except asyncio.TimeoutError:
         return await message.reply("⏱️ Timeout! Please try again.")
 
