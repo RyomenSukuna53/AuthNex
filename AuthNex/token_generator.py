@@ -12,7 +12,7 @@ pending_token_users = {}
 async def generate_authnex_token(length=50):
     return secrets.token_hex(length // 2)
 
-@app.on_message(filters.command("generatetoken") & filters.private, group=14)
+@Client.on_message(filters.command("generatetoken") & filters.private, group=14)
 async def token_command_handler(_, message: Message):
     user_id = message.from_user.id
 
