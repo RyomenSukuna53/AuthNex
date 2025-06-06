@@ -1,30 +1,42 @@
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
-from pyrogram.handlers import MessageHandler
 from AuthNex import app
-from AuthNex.Database import user_col
+from AuthNex.Database import user_col, sessions_col
 
-SUDO_USER = [6239769036]
+@app.on_message(filters.command('myinfo') & (filters.private | filters.group), group=16)
+async def accounts_handler(client: Client, m: Message):
+    _id = m.from_user.id
 
-@Client.on_message(filters.command('myinfo') & (filters.private | filters.group) , group=10)
-async def accounts_handler(_, m: Message):
-    count = await user_col.count_documents({})
-    if count == 0:
-        await m.reply("😭")
-        await m.reply("𝗡𝗼 𝗜𝗗'𝗦 𝗳𝗼𝘂𝗻𝗱.") 
-        return 
+    # Check if session exists
+    session = await sessions_col.find_one({"_id": _id})
+    if not session:
+        return await m.reply("❌ You are not logged in. Use `/login` first.")
 
-    reply = "🗝 *𝗔𝗹𝗹 𝗿𝗲𝗴𝗶𝘀𝘁𝗲𝗿𝗲𝗱 𝘂𝘀𝗲𝗿𝘀 𝗹𝗶𝘀𝘁 💳*\n\n"
-    
-    async for user in user_col.find({}):
-        reply += (
-            f"*𝗡𝗔𝗠𝗘:* {user.get('Name', 'N/A')}\n"
-            f"*AGE:* {user.get('Age', 'N/A')}\n"
-            f"*𝗔𝗨𝗧𝗛-𝗠𝗔𝗜𝗟:* {user.get('Mail', 'N/A')}\n" 
-            f"*𝗣𝗔𝗦𝗦𝗪𝗢𝗥𝗗:* {user.get('Password', 'N/A')}\n"
-            f"*AUTH-COINS:* {user.get('Authcoins', 'N/A')}\n"
-            "----------------------------------\n\n"
-        )
+    # Fetch user data
+    user = await user_col.find_one({"Mail": session.get('mail')})
+    if not user:
+        return await m.reply("❌ User data not found.")
 
-    await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
+    # Fetch profile picture
+    photos = await client.get_profile_photos(_id, limit=1)
+    if not photos:
+        return await m.reply("❌ No profile picture found.")
+
+    # Download profile pic
+    pic = await client.download_media(photos[0].file_id)
+
+    # Reply with info and profile pic
+    await m.reply_photo(
+        photo=pic,
+        caption=f"""**🔐 AuthNex Profile**
+
+👤 **Name:** `{user.get('Name')}`
+🆔 **User ID:** `{_id}`
+📧 **Email:** `{user.get('Mail')}`
+🔰 **AuthCoins:** {user.get('AuthCoins')}
+🧪 **Password:** {user.get('Password')}
+🔑 **Token:** `{user.get('token', 'Not Generated')}`
+""",
+        parse_mode=ParseMode.MARKDOWN
+    )
