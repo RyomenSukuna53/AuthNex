@@ -4,7 +4,7 @@ from pyrogram.types import Message
 from AuthNex import app
 from AuthNex.Database import user_col, sessions_col
 
-@app.on_message(filters.command('myinfo') & (filters.private | filters.group), group=16)
+@Client.on_message(filters.command('myinfo') & (filters.private), group=16)
 async def accounts_handler(client: Client, m: Message):
     _id = m.from_user.id
 
