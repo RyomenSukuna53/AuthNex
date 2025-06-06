@@ -3,18 +3,18 @@ from pyrogram.types import Message
 from pyrogram.enums import ChatType
 import secrets
 import asyncio
+
 from AuthNex import app
 from AuthNex.Database import user_col, sessions_col, tokens_col
 
 async def generate_authnex_token(length=50):
     return secrets.token_hex(length // 2)  # generates a secure token
 
-# Start command handler
-@Client.on_message(filters.command("generatetoken") & filters.private, group=14)
+@app.on_message(filters.command("generatetoken") & filters.private, group=14)
 async def token_generator(_, message: Message):
     user_id = message.from_user.id
 
-    # Ensure the command is used only in private chat
+    # Ensure command is used only in private chat
     if message.chat.type != ChatType.PRIVATE:
         return await message.reply("❌ Use this command in **private chat only.**")
 
@@ -34,13 +34,9 @@ async def token_generator(_, message: Message):
 
     # Ask for password
     await message.reply("🔐 Please send your **password** to confirm token generation.")
-    
-    # Wait for user's next message as password
-    def check(_, m: Message):
-        return m.from_user.id == user_id and m.chat.id == message.chat.id
 
     try:
-        response = await Client.listen(message.chat.id, filters=filters.text & filters.private, timeout=60)
+        response = await app.listen(message.chat.id, filters=filters.text & filters.private, timeout=60)
     except asyncio.TimeoutError:
         return await message.reply("⏱️ Timeout! Please try again.")
 
