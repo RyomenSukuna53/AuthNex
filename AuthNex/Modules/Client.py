@@ -65,47 +65,49 @@ class AuthClient(Client):
         print("❌ Disconnected from AuthNex and Bot.")
 
     async def auth_login(client: Client, message: Message, api_id, api_hash, bot_token, notify_id):
-        user_id = message.from_user.id
-        await message.reply("📧 Send your AuthNex email:")
-        mail_msg = await client.listen(user_id)
-        mail = mail_msg.text.strip()
+    user_id = message.from_user.id
+    await message.reply("📧 Send your AuthNex email:")
+    mail_msg = await client.listen(user_id)
+    mail = mail_msg.text.strip()
 
     await client.send_message(user_id, "🔒 Send your password:")
-        pass_msg = await client.listen(user_id)
-        password = pass_msg.text.strip()
+    pass_msg = await client.listen(user_id)
+    password = pass_msg.text.strip()
 
-        user = await user_col.find_one({"Mail": mail})
-        if not user:
-            return await client.send_message(user_id, "❌ Email not found.")
-        if user.get("Password") != password:
-            return await client.send_message(user_id, "❌ Wrong password.")
- 
-        otp = str(random.randint(100000, 999999))
-        await client.send_message(user_id, f"🔐 Your OTP is: `{otp}`")
+    user = await user_col.find_one({"Mail": mail})
+    if not user:
+        return await client.send_message(user_id, "❌ Email not found.")
+    if user.get("Password") != password:
+        return await client.send_message(user_id, "❌ Wrong password.")
 
-        await client.send_message(user_id, "✉️ Please enter OTP:")
-        otp_msg = await client.listen(user_id)
-        if otp_msg.text.strip() != otp:
-            return await client.send_message(user_id, "❌ Invalid OTP.")
+    # OTP Phase
+    otp = str(random.randint(100000, 999999))
+    await client.send_message(user_id, f"🔐 Your OTP is: `{otp}`")
+
+    await client.send_message(user_id, "✉️ Please enter OTP:")
+    otp_msg = await client.listen(user_id)
+    if otp_msg.text.strip() != otp:
+        return await client.send_message(user_id, "❌ Invalid OTP.")
 
     # ✅ Reward if first login
-        already_logged = await sessions_col.find_one({"_id": user["_id"]})
-        if not already_logged:
-            await user_col.update_one({"Mail": mail}, {"$inc": {"AuthCoins": 100, "GamesPlayed": +1}})
-            await sessions_col.insert_one({"_id": user["_id"], "mail": mail})
-            await client.send_message(user_id, "🎉 First-time login — 100 AuthCoins added!")
+    already_logged = await sessions_col.find_one({"_id": user["_id"]})
+    if not already_logged:
+        await user_col.update_one({"Mail": mail}, {"$inc": {"AuthCoins": 100}})
+        await sessions_col.insert_one({"_id": user["_id"], "mail": mail})
+        await client.send_message(user_id, "🎉 First-time login — 100 AuthCoins added!")
 
-        AuthClient(
-            api_id=api_id,
-            api_hash=api_hash,
-            bot_token=bot_token,
-            coins=user.get("coins", 0),
-            mail=mail,
-            password=password,
-            name=user.get("Name"),
-            token=user.get("token"),
-            start_msg="🚀 **Bot Started Successfully with AuthNex!**",
-            notify_id=notify_id  # channel or user to notify
+    Bot = AuthClient(
+        api_id=api_id,
+        api_hash=api_hash,
+        bot_token=bot_token,
+        coins=user.get("coins", 0),
+        mail=mail,
+        password=password,
+        name=user.get("Name"),
+        token=user.get("token"),
+        start_msg="🚀 **Bot Started Successfully with AuthNex!**",
+        notify_id=notify_id
     )
 
-        await app.send_message(user_id, "✅ Logged in & Bot Started via AuthClient.")
+    await Bot.start()
+    await app.send_message(user_id, "✅ Logged in & Bot Started via AuthClient.")
