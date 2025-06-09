@@ -11,8 +11,8 @@ async def msg_your_frnd(_, m: Message):
     if len(m.text) < 3:
         return await m.reply("USAGE: /msg <id> <msg>")
     recieverID = m.text[1]
-    sender = session.find_one({'_id': senderID})
-    reciever = session.find_one({"_id": recieverID})
+    sender = await session.find_one({'_id': senderID})
+    reciever = await session.find_one({"_id": recieverID})
     if not sender:
         return
     if not reciever:
