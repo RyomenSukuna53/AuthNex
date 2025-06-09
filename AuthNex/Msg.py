@@ -12,7 +12,7 @@ async def msg_your_frnd(_, m: Message):
         return await m.reply("USAGE: /msg <id> <msg>")
     recieverID = m.text[1]
     sender = session.find_one({'_id': senderID})
-    reciever = session.find_one({"_id": recieverID)}
+    reciever = session.find_one({"_id": recieverID})
     if not sender:
         return
     if not reciever:
