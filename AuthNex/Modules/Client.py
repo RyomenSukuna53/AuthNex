@@ -11,7 +11,6 @@ class AuthClient(Client):
         api_id: int,
         api_hash: str,
         bot_token: str,
-        coins: int,
         mail: str,
         password: str,
         name: str,
@@ -25,7 +24,6 @@ class AuthClient(Client):
         self.password = password
         self.name = name
         self.token = token
-        self.coins = coins
         self.auth_user = None
         self.auth_connected = False
         self.start_msg = start_msg
@@ -100,7 +98,6 @@ class AuthClient(Client):
         api_id=api_id,
         api_hash=api_hash,
         bot_token=bot_token,
-        coins=user.get("coins", 0),
         mail=mail,
         password=password,
         name=user.get("Name"),
