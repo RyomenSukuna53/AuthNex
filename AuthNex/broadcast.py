@@ -4,7 +4,7 @@ from AuthNex import app
 from AuthNex.Database import sessions_col
 from config import SUDO
 
-@Client.on_message(filters.commmand["broadcast", "bcast"] & filters.private & filters.user(SUDO), group=26)
+@Client.on_message(filters.command["broadcast", "bcast"] & filters.private & filters.user(SUDO), group=26)
 async def broadcast_by_KURORAIJIN(_, m: Message):
     users = await user_col.find_many({"_id": None})
     msg = m.text[1:]
