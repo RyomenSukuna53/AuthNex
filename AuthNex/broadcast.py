@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from AuthNex import app
-from AuthNex.Database import sessons_col
+from AuthNex.Database import sessions_col
 from config import SUDO
 
 @Client.on_message(filters.commmand["broadcast", "bcast"] & filters.private & filters.user(SUDO), group=26)
