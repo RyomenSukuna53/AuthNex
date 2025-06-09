@@ -3,7 +3,7 @@ from pyrogram.types import Message
 from AuthNex import app
 from AuthNex.Database import user_col, sessions_col
 
-@app.on_message(filters.command("pay") & filters.private)
+@Client.on_message(filters.command("pay") & filters.private, group=25)
 async def pay_command(_, message: Message):
     user = message.from_user
     user_id = user.id
