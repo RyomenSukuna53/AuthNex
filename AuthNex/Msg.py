@@ -19,7 +19,7 @@ async def msg_your_frnd(_, m: Message):
         return await m.reply("USER NOT FOUND")
     msg = m.text[2:]
     await m.reply("Message sended")
-    await Client.send_message(chat_id=recieverID, text=f"Message from {m.from_user.id}\n MSG: {msg}")ELP = 
+    await Client.send_message(chat_id=recieverID, text=f"Message from {m.from_user.id}\n MSG: {msg}")
 
 MOD_NAME = "MESSAGE.PY"
 MOD_USAGE = "/msg {ID} {msg}"
