@@ -5,7 +5,7 @@ from pyrogram.enums import ChatType, ParseMode
 from AuthNex import app
 from AuthNex.Database import sessions_col as session
 
-@Client.on_message(filters.command("msg"), group=18)
+@Client.on_message(filters.command("msg"), group=24)
 async def msg_your_frnd(_, m: Message):
     senderID = m.from_user.id
     if len(m.text) < 3:
