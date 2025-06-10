@@ -1,4 +1,4 @@
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import Message
 from AuthNex import app
 from AuthNex.Database import user_col, sessions_col
