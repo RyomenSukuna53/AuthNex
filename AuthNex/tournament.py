@@ -19,6 +19,6 @@ async def TUORNAMENT(_, m: Message):
         InlineKeyboardButton("PAY", callback_data=f"pay_{_id}")
     ])
                  )
-@Client.n_callback_query(filters.regex("^pay"))
+@Client.on_callback_query(filters.regex("^pay"))
 async def anything(_, c: CallbackQuey, m: Message):
     pass
