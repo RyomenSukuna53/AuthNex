@@ -4,7 +4,7 @@ from pyrogram.enums import ChatType, ParseMode
 from AuthNex import app
 from AuthNex.Database import JoinedPlayers, sessions_col, user_col
 import config
-@Client.on_message(filter.command("star_tuor") & filters.user(config.SUDO))
+@Client.on_message(filters.command("star_tuor") & filters.user(config.SUDO))
 async def TUORNAMENT(_, m: Message):
     _id = m.from_user.id
     session = sessions_col.find_one({"_id": _id})
