@@ -13,7 +13,7 @@ async def TUORNAMENT(_, m: Message):
     user = user_col.find_one({"Mail": session.get("mail")})
     if user.get("AuthCoins", 0)<1000:
         return await m.reply("NOT ENOUGH COINS TO CONFIRM")
-    if not user.get("TCA", 0)=0:
+    if not user.get("TCA", 0)==0:
         return await m.reply("YOU DONT HAVE AUTHENTICATION TOURNAMENT PERTIT PLZ PURCHASE I FIRST OR FOUND IT IN A GROK DOUNGEN")
     await m.reply(">**YOU HAVE TO GIVE YOUR PERMIT AND 1000 COINS TO START", reply_markup=InlineKeyboardMarkup([
         InlineKeyboardButton("PAY", callback_data=f"pay_{_id}")
