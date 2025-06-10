@@ -45,13 +45,12 @@ async def claim_rewards(_, m: Message):
         return await m.reply(f"⏳ You already claimed {reward_type} rewards.\nCome back in `{remaining}`.")
 
     reward = REWARDS[reward_type]
-
-    await user_col.update_one({"_id": user["_id"]}, {
+    sessions = sessions_col.find_one({"_id": user["_id"]})
+    await user_col.update_one({"Mail": sessions.get("mail")}, {
         "$inc": {
             "yen": reward["yen"],
             "xp": reward["xp"],
-            "valor": reward["valor"]
-        },
+        }
         "$set": {
             last_claim_field: now
         }
@@ -61,8 +60,6 @@ async def claim_rewards(_, m: Message):
 ╭── ❰ 𝗥 𝗘 𝗪 𝗔 𝗥 𝗗 ❱ ──╮
 │ 💴  𝗬𝗘𝗡       ┃ +{reward['yen']}
 │ ✨️  𝗫𝗣        ┃ +{reward['xp']}
-│ 🎁  𝗗𝗥𝗢𝗣𝗦     ┃ {reward['drop']}
-│ 🏰 𝗞𝗜𝗡𝗚𝗗𝗢𝗠  ┃ +{reward['valor']} 𝘃𝗮𝗹𝗼𝗿
 ╰────────────────────╯
 ✅ Claimed your **{reward_type.upper()}** reward!
 """
