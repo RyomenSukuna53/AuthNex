@@ -33,7 +33,7 @@ async def go_on_adventure(_, m: Message):
 
     if reward_chance <= 0.00111:
         # 🎴 Merchant Found
-        await user_col.update_one({"Mail": session.get("mail")}}, {"$set": {"last_adventure": now}})
+        await user_col.update_one({"Mail": session.get("mail")}), {"$set": {"last_adventure": now}})
         return await m.reply("""
 🧔‍♂️ You stumbled upon a **mysterious merchant**...  
 He whispers: _"Shhh... I've got secret AuthNex accounts for sale."_  
@@ -46,7 +46,7 @@ But he vanished before you could respond!
         reward = random.choice(CURRENCIES)
         amount = reward["amount"]()
 
-        await user_col.update_one({"Mail": session.get("mail")}}, {
+        await user_col.update_one({"Mail": session.get("mail")}), {
             "$inc": {reward["name"].lower(): amount},
             "$set": {"last_adventure": now}
         })
@@ -58,7 +58,7 @@ You found {reward['emoji']} `{amount}` {reward['name']} while exploring the Auth
 
     else:
         # 💀 Found Nothing
-        await user_col.update_one({"Mail": session.get("mail")}, {"$set": {"last_adventure": now}})
+        await user_col.update_one({"Mail": session.get("mail")}), {"$set": {"last_adventure": now}})
         return await m.reply("""
 🌫️ You wandered through empty lands...  
 Nothing was found, but the experience was priceless.  
