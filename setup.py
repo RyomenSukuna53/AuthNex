@@ -14,7 +14,7 @@ requires = [
 
 setup(
     name="AuthNex",
-    version="0.2-beta",
+    version="1.0[SPC]",
     packages=find_packages(),
     install_requires=requires,
     author="Kuro__",
