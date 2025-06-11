@@ -47,11 +47,11 @@ async def claim_rewards(_, m: Message):
     reward = REWARDS[reward_type]
     sessions = sessions_col.find_one({"_id": user["_id"]})
     await user_col.update_one({"Mail": sessions.get("mail")}, {
-        "$inc": {
+        "$inc", {
             "yen": reward["yen"],
             "xp": reward["xp"],
         }
-        "$set": {
+        "$set", {
             last_claim_field: now
         }
     })
