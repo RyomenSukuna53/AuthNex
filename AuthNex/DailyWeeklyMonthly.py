@@ -5,7 +5,6 @@ from pyrogram.types import Message
 from AuthNex import app
 from AuthNex.Database import user_col, sessions_col
 from datetime import datetime, timedelta
-import config
 
 REWARDS = {
     "daily": {"yen": 50000, "xp": 1000, "valor": 10, "drop": "🔑"},
@@ -19,7 +18,7 @@ LAST_CLAIM_FIELDS = {
     "monthly": "last_monthly"
 }
 
-@Client.on_message(filters.command(["daily", "weekly", "monthly"]), group=31)
+@app.on_message(filters.command(["daily", "weekly", "monthly"]), group=31)
 async def claim_rewards(_, m: Message):
     reward_type = m.command[0].lower()
     user_id = m.from_user.id
@@ -42,24 +41,30 @@ async def claim_rewards(_, m: Message):
 
     if last_claim_time and now - last_claim_time < cooldown:
         remaining = cooldown - (now - last_claim_time)
-        return await m.reply(f"⏳ You already claimed {reward_type} rewards.\nCome back in `{remaining}`.")
+        return await m.reply(f"⏳ You already claimed **{reward_type}** rewards.\nCome back in `{str(remaining).split('.')[0]}`.")
 
     reward = REWARDS[reward_type]
-    sessions = sessions_col.find_one({"_id": user["_id"]})
-    await user_col.update_one({"Mail": sessions.get("mail")}, {
-        "$inc", {
-            "yen": reward["yen"],
-            "xp": reward["xp"],
+
+    await user_col.update_one(
+        {"Mail": session["mail"]},
+        {
+            "$inc": {
+                "yen": reward["yen"],
+                "xp": reward["xp"],
+                "valor": reward["valor"]
+            },
+            "$set": {
+                last_claim_field: now
+            }
         }
-        "$set", {
-            last_claim_field: now
-        }
-    })
+    )
 
     msg = f"""
 ╭── ❰ 𝗥 𝗘 𝗪 𝗔 𝗥 𝗗 ❱ ──╮
 │ 💴  𝗬𝗘𝗡       ┃ +{reward['yen']}
 │ ✨️  𝗫𝗣        ┃ +{reward['xp']}
+│ 🎁  𝗗𝗥𝗢𝗣𝗦     ┃ {reward['drop']}
+│ 🏰 𝗞𝗜𝗡𝗚𝗗𝗢𝗠  ┃ +{reward['valor']} 𝘃𝗮𝗹𝗼𝗿
 ╰────────────────────╯
 ✅ Claimed your **{reward_type.upper()}** reward!
 """
