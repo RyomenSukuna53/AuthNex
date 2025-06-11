@@ -20,5 +20,5 @@ async def TUORNAMENT(_, m: Message):
     ])
                  )
 @Client.on_callback_query(filters.regex("^pay"))
-async def anything(_, c: CallbackQuey, m: Message):
+async def anything(_, c: CallbackQuery, m: Message):
     pass
