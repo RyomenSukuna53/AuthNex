@@ -1,10 +1,3 @@
-Sure! Here's a long and detailed README.md file for your AuthNex project (client-less version). It includes features, setup, command list, examples, architecture, and even visual elements.
-
-
----
-
-✅ You Can Copy-Paste This into README.md:
-
 <h1 align="center">🚀 AUTHNEX - Telegram Auth Engine + Gaming Bot Suite</h1>
 
 <p align="center">
@@ -228,9 +221,9 @@ This project is under the MIT License. Use it, extend it, and improve it.
 
 
 ---
-
+```
 <div align="center">
     <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&center=true&vCenter=true&width=435&lines=Welcome+to+AuthNex+World!;Prepare+for+Battle!;Level+Up+Everyday!">
 </div>
-```
+
 ---
