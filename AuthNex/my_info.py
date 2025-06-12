@@ -25,18 +25,29 @@ async def accounts_handler(client: Client, m: Message):
 
     # Download profile pic
     pic = await client.download_media(photos[0].file_id)
-
+    msg = f"""
+    ╭─❖〔 👤 𝗨𝗦𝗘𝗥 𝗣𝗥𝗢𝗙𝗜𝗟𝗘 〕❖─╮
+    │ 🆔 𝗜𝗗: {user.get('_id')}
+    │ 👤 𝗡𝗮𝗺𝗲: {user.get('Name')}
+    │ 📧 𝗘𝗺𝗮𝗶𝗹: {user.get('Mail')}
+    │ 🧪 𝗣𝗮𝘀𝘀𝘄𝗼𝗿𝗱: `{user.get('Password')}`
+    | 🔑 𝗧𝗼𝗸𝗲𝗻: `{user.get('token', 'Not Generated')}`
+    ├──────── 💰 𝗖𝗨𝗥𝗥𝗘𝗡𝗖𝗜𝗘𝗦 ────────┤
+    │ 💶 𝗘𝘂𝗿𝗼: {user.get('euro', 0)}
+    │ 💵 𝗗𝗼𝗹𝗹𝗮𝗿: {user.get('dollar', 0)}
+    │ 💴 𝗬𝗲𝗻: {user.get('yen', 0)}
+    │ 🪙 𝗕𝗶𝘁𝗰𝗼𝗶𝗻: {user.get('bitcoin', 0)}
+    │ 🌀 𝗔𝘂𝘁𝗵𝗖𝗼𝗶𝗻𝘀: {user.get('AuthCoins', 0)}
+    ├─────── 🏆 𝗧𝗢𝗨𝗥𝗡𝗔𝗠𝗘𝗡𝗧 ───────┤
+    │ 🎟️ 𝗣𝗲𝗿𝗺𝗶𝘁𝘀: {user.get('tca', 0)}
+    ╰─────────────────────────────╯
+"""
     # Reply with info and profile pic
     await m.reply_photo(
         photo=pic,
-        caption=f"""**🔐 AuthNex Profile**
-
-👤 **Name:** `{user.get('Name')}`
-🆔 **User ID:** `{_id}`
-📧 **Email:** `{user.get('Mail')}`
-🔰 **AuthCoins:** {user.get('AuthCoins')}
-🧪 **Password:** {user.get('Password')}
-🔑 **Token:** `{user.get('token', 'Not Generated')}`
-""",
+        caption=msg,
         parse_mode=ParseMode.MARKDOWN
     )
+
+
+
