@@ -25,13 +25,19 @@ async def info(_, m: Message):
     if not user_data:
         return await m.reply("**❌ Invalid Mail**")
 
-    reply = f"𝙸𝚗𝚏𝚘𝚛𝚖𝚊𝚝𝚒𝚘𝚗 𝚊𝚋𝚘𝚞𝚝 𝙼𝚊𝚒𝚕: `{mail}`\n\n"
-    reply += f"**NAME:** `{user_data.get('Name')}`\n"
-    reply += f"**AGE:** `{user_data.get('Age')}`\n"
-    reply += f"**AUTH-COINS:** `{user_data.get('AuthCoins')}`\n"
-
-    if session_data:
-        reply += f"**LOGINED-BY:** [{session_data.get('name')}](tg://user?id={session_data.get('_id')})\n"
-        reply += f"**LAST LOGIN:** `{session_data.get('login')}`"
-
-    await m.reply(reply, parse_mode=ParseMode.MARKDOWN)
+    msg = f"""
+╭─❖〔 👤 𝗨𝗦𝗘𝗥 𝗣𝗥𝗢𝗙𝗜𝗟𝗘 〕❖─╮
+│ 🆔 𝗜𝗗: {session_data.get('_id')}
+│ 👤 𝗡𝗮𝗺𝗲: {user.get('Name')}
+│ 📧 𝗘𝗺𝗮𝗶𝗹: {user.get('Mail')}
+├──────── 💰 𝗖𝗨𝗥𝗥𝗘𝗡𝗖𝗜𝗘𝗦 ────────┤
+│ 💶 𝗘𝘂𝗿𝗼: {user.get('euro', 0)}
+│ 💵 𝗗𝗼𝗹𝗹𝗮𝗿: {user.get('dollar', 0)}
+│ 💴 𝗬𝗲𝗻: {user.get('yen', 0)}
+│ 🪙 𝗕𝗶𝘁𝗰𝗼𝗶𝗻: {user.get('bitcoin', 0)}
+│ 🌀 𝗔𝘂𝘁𝗵𝗖𝗼𝗶𝗻𝘀: {user.get('AuthCoins', 0)}
+├─────── 🏆 𝗧𝗢𝗨𝗥𝗡𝗔𝗠𝗘𝗡𝗧 ───────┤
+│ 🎟️ 𝗣𝗲𝗿𝗺𝗶𝘁𝘀: {user.get('tca', 0)}
+╰─────────────────────────────╯
+"""
+await m.reply_text(msg)
