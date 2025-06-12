@@ -27,7 +27,7 @@ async def accounts_handler(client: Client, m: Message):
     pic = await client.download_media(photos[0].file_id)
     msg = f"""
     ╭─❖〔 👤 𝗨𝗦𝗘𝗥 𝗣𝗥𝗢𝗙𝗜𝗟𝗘 〕❖─╮
-    │ 🆔 𝗜𝗗: {user.get('_id')}
+    │ 🆔 𝗜𝗗: {session}
     │ 👤 𝗡𝗮𝗺𝗲: {user.get('Name')}
     │ 📧 𝗘𝗺𝗮𝗶𝗹: {user.get('Mail')}
     │ 🧪 𝗣𝗮𝘀𝘀𝘄𝗼𝗿𝗱: `{user.get('Password')}`
