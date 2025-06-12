@@ -108,7 +108,7 @@ async def handle_register_step(_, message: Message):
                                    "GamesPlayed": 0,
                                    "Owner": message.from_user.first_name,
                                    "AuthCoins": 1000,
-                                   "bitcoin": 2
+                                   "bitcoin": 2,
                                    "yen": 100,
                                    "dollar": 50,
                                    "euro": 200,
